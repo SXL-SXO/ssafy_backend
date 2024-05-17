@@ -12,12 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class BoardDto {
-    private int boardId;
-    private int boardTouristspotId;
+    private Integer boardId;
+    private Integer touristspotId;
     private String boardTitle;
     private String boardContent;
-    private String boardAccountNickname;
-    private int boardAccountId;
+    private String accountNickname;
+    private Integer accountId;
     private int boardRecommend;
     private List<CommentDto> boardComment;
 }

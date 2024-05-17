@@ -9,9 +9,11 @@ import java.util.List;
 @Mapper
 public interface BoardDao {
     List<BoardDto> boardList(PageDto pageDto);
-    BoardDto boardDetail(int boardId);
-    int boardInsert(BoardDto boardDto);
-    int boardUpdate(BoardDto boardDto);
-    int boardDelete(int boardId);
-    int boardRecommend(int boardId, int boardRecommend);
+    BoardDto boardDetail(Integer boardId);
+    Integer boardInsert(BoardDto boardDto);
+    Integer boardUpdate(BoardDto boardDto);
+    Integer boardDelete(Integer boardId);
+
+    Integer boardRecommend(Integer boardId, int boardRecommend);
+    List<BoardDto> boardRecommendList(Integer AccountId);
 }

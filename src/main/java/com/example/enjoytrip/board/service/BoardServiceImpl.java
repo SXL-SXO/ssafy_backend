@@ -25,39 +25,46 @@ public class BoardServiceImpl implements BoardService {
 
     @Transactional
     @Override
-    public BoardDto BoardDetailswithComment(int boardId) {
+    public BoardDto BoardDetailswithComment(Integer boardId) {
         BoardDto boardDto = boardDao.boardDetail(boardId);
         boardDto.setBoardComment(commentDao.commentList(boardId));
         return boardDto;
     }
 
     @Override
-    public BoardDto boardDetail(int boardId) {
+    public BoardDto boardDetail(Integer boardId) {
         return boardDao.boardDetail(boardId);
     }
 
     @Override
-    public int boardInsert(BoardDto boardDto) {return boardDao.boardInsert(boardDto);}
+    public Integer boardInsert(BoardDto boardDto) {return boardDao.boardInsert(boardDto);}
 
     @Override
-    public int boardUpdate(BoardDto boardDto) {
+    public Integer boardUpdate(BoardDto boardDto) {
         return boardDao.boardUpdate(boardDto);
     }
 
     @Override
-    public int boardDelete(int boardId) {
+    public Integer boardDelete(Integer boardId) {
         return boardDao.boardDelete(boardId);
     }
 
     @Override
-    public int boardRecommend(int boardId, int boardRecommend) {
-        return boardDao.boardRecommend(boardId, boardRecommend+1);
+    public Integer boardRecommend(Integer boardId, Integer accountId, int boardRecommend) {
+        List<BoardDto> likeRecommend =  boardDao.boardRecommendList(accountId));
+        for(BoardDto boardDto : likeRecommend){
+            if(boardDto.getBoardId().equals(boardId)) return null;
+        }
+        return 1;
     }
 
     @Override
-    public List<CommentDto> commentList(int commentBoardId) {
-        return commentDao.commentList(commentBoardId);
+    public List<BoardDto> boardRecommendList(Integer AccountId) {
+        return boardDao.boardRecommendList(AccountId);
     }
 
-
+    @Override
+    public List<CommentDto> commentList(Integer boardId) {
+        return commentDao.commentList(boardId);
+    }
 }

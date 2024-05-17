@@ -41,10 +41,10 @@ class BoardTest {
     @BeforeEach
     void beforeEach() {
         boardDto = new BoardDto();
-        boardDto.setBoardTouristspotId(1);
+        boardDto.setTouristspotId(1);
         boardDto.setBoardTitle("배고파");
         boardDto.setBoardContent("안된다");
-        boardDto.setBoardAccountId(1);
+        boardDto.setAccountId(1);
     }
 
     @Test
@@ -53,10 +53,10 @@ class BoardTest {
     void testboardInsert() {
         // given
         BoardDto dto = new BoardDto();
-        dto.setBoardTouristspotId(1);
+        dto.setTouristspotId(1);
         dto.setBoardTitle("배고파");
         dto.setBoardContent("안된다");
-        dto.setBoardAccountId(1);
+        dto.setAccountId(1);
 
         //when, then
         assertEquals(boardService.boardInsert(dto), 1);
@@ -70,7 +70,7 @@ class BoardTest {
         boardService.boardInsert(boardDto);
 
         //when
-        boardDto.setBoardTouristspotId(1);
+        boardDto.setTouristspotId(1);
         boardDto.setBoardTitle("배고파");
         boardDto.setBoardContent("수정된다");
         System.out.println(boardDto);
@@ -148,8 +148,8 @@ class BoardTest {
 
         //then
         assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardId(), boardDto.getBoardId());
-        assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardAccountId(), boardDto.getBoardAccountId());
-        assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardTouristspotId(), boardDto.getBoardTouristspotId());
+        assertEquals(boardService.boardDetail(boardDto.getBoardId()).getAccountId(), boardDto.getAccountId());
+        assertEquals(boardService.boardDetail(boardDto.getBoardId()).getTouristspotId(), boardDto.getTouristspotId());
         assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardTitle(), boardDto.getBoardTitle());
         assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardContent(), boardDto.getBoardContent());
     }

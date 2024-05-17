@@ -1,5 +1,6 @@
 package com.example.enjoytrip.board.service;
 
+import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.comment.domain.CommentDto;
 import com.example.enjoytrip.common.dto.PageDto;
@@ -11,11 +12,15 @@ public interface BoardService {
     List<BoardDto> boardList(PageDto pageDto);
 
     @Transactional
-    BoardDto BoardDetailswithComment(int boardId);
-    BoardDto boardDetail(int boardId);
-    int boardInsert(BoardDto boardDto);
-    int boardUpdate(BoardDto boardDto);
-    int boardDelete(int boardId);
-    int boardRecommend(int boardId, int boardRecommend);
-    List<CommentDto> commentList(int commentBoardId);
+    BoardDto BoardDetailswithComment(Integer boardId);
+
+    BoardDto boardDetail(Integer boardId);
+    Integer boardInsert(BoardDto boardDto);
+    Integer boardUpdate(BoardDto boardDto);
+    Integer boardDelete(Integer boardId);
+
+    Integer boardRecommend(Integer boardId, Integer AccountId, int boardRecommend);
+    List<BoardDto> boardRecommendList(Integer AccountId);
+
+//    List<CommentDto> commentList(Integer boardId);
 }
