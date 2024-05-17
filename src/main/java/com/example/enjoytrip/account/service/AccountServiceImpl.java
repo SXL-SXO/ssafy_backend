@@ -42,4 +42,9 @@ public class AccountServiceImpl implements AccountService {
         }
         return null;
     }
+
+    @Override
+    public Integer login(String accountEmail, String accountPassword) {
+        return accountDao.login(accountEmail, accountPassword);
+    }
 }

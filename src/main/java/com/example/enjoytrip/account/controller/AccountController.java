@@ -1,6 +1,7 @@
 package com.example.enjoytrip.account.controller;
 
 import com.example.enjoytrip.account.dto.AccountDto;
+import com.example.enjoytrip.account.dto.AccountMbti;
 import com.example.enjoytrip.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService accountService;
 
-    @PostMapping
-    public Integer accountInsert(@RequestBody AccountDto accountDto){
+    @PostMapping({"/", "/{accountMbti}"})
+    public Integer accountInsert(@PathVariable(name = "accountMbti", required = false) AccountMbti accountMbti, @RequestBody AccountDto accountDto){
+        if(accountMbti!=null) { accountDto.setAccountMbti(accountMbti);
+        }
         return accountService.accountInsert(accountDto);
     }
     @GetMapping("/{accountId}")

@@ -12,5 +12,7 @@ public class AccountDto {
     private String accountEmail;
     private String accountPassword;
     private String accountNickname;
+
     private AccountRole accountRole;
+    private AccountMbti accountMbti;
 }
