@@ -46,13 +46,24 @@
             )
         where board_id = #{boardId}
     </update>
-    <update id = "boardRecommendUpdate">
-        update board
-        set board_recommend = #{boardRecommend}
-        where board_id = #{boardId}
-    </update>
-    <delete id = "boardDelete" parameterType="int">
+
+    <delete id = "boardDelete" parameterType="Integer">
         delete from board where board_id = #{boardId}
+    </delete>
+
+
+    <select id = "boardRecommendList" parameterType="Integer">
+        select board_id from like_board where account_id = #{accountId} order by board_id desc
+    </select>
+    <select id = "boardRecommendCount" parameterType="Integer">
+        select count(account_id) from like_board where board_id = #{boardId}
+    </select>
+    <insert id = "boardRecommendInsert">
+        insert into like_board (board_id, account_id)
+        values (#{boardId}, #{accountId})
+    </insert>
+    <delete id = "boardRecommendDelete" parameterType="Integer">
+        delete from like_board where board_id = #{boardId} and account_id = #{accountId}
     </delete>
 
 </mapper>

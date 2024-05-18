@@ -14,6 +14,8 @@ public interface BoardDao {
     Integer boardUpdate(BoardDto boardDto);
     Integer boardDelete(Integer boardId);
 
-    Integer boardRecommend(Integer boardId, int boardRecommend);
-    List<BoardDto> boardRecommendList(Integer AccountId);
+    Integer boardRecommendInsert(Integer boardId, Integer accountId);
+    Integer boardRecommendDelete(Integer boardId, Integer accountId);
+    List<Integer> boardRecommendList(Integer accountId);
+    int boardRecommendCount(Integer boardId);
 }

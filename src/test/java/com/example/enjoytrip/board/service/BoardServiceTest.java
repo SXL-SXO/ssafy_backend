@@ -1,8 +1,10 @@
-package com.example.enjoytrip.board;
+package com.example.enjoytrip.board.service;
 
+import com.example.enjoytrip.account.dao.AccountDao;
+import com.example.enjoytrip.account.dto.AccountDto;
+import com.example.enjoytrip.account.service.AccountService;
 import com.example.enjoytrip.board.dao.BoardDao;
 import com.example.enjoytrip.board.dto.BoardDto;
-import com.example.enjoytrip.board.service.BoardService;
 import com.example.enjoytrip.common.dto.PageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @SpringBootTest
-class BoardTest {
+class BoardServiceTest {
 
     @Autowired
     BoardDao boardDao;
@@ -28,7 +33,14 @@ class BoardTest {
     @Autowired
     BoardService boardService;
 
+    @Autowired
+    AccountDao accountDao;
+
+    @Autowired
+    AccountService accountService;
+
     BoardDto boardDto = null;
+    AccountDto accountDto = null;
     PageDto pageDto = null;
 
     @Test
@@ -40,11 +52,17 @@ class BoardTest {
 
     @BeforeEach
     void beforeEach() {
+        accountDto = new AccountDto();
+        accountDto.setAccountNickname("테스트");
+        accountDto.setAccountEmail("KHG@test.com");
+        accountDto.setAccountPassword("1234");
+        accountService.accountInsert(accountDto);
+
         boardDto = new BoardDto();
         boardDto.setTouristspotId(1);
         boardDto.setBoardTitle("배고파");
         boardDto.setBoardContent("안된다");
-        boardDto.setAccountId(1);
+        boardDto.setAccountId(accountDto.getAccountId());
     }
 
     @Test
@@ -154,5 +172,107 @@ class BoardTest {
         assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardContent(), boardDto.getBoardContent());
     }
 
-//    @Test
+    @Test
+    @DisplayName("board 추천하기 테스트 - 처음 추천")
+    @Transactional
+    void FirstAccountRecommendBoardTest() {
+        //given
+        boardService.boardInsert(boardDto);
+
+        //when, then
+        assertEquals(boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId()), 1);
+    }
+
+    @Test
+    @DisplayName("board 추천하기 테스트 - 추천했던거 다시 추천")
+    @Transactional
+    void SecondAccountRecommendBoardTest() {
+        //given
+        boardService.boardInsert(boardDto);
+
+        //when
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+
+        //then
+        assertEquals(boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId()), null);
+    }
+
+    @Test
+    @DisplayName("board 추천취소하기 테스트 - 추천했던거 추천취소")
+    @Transactional
+    void AccountRecommendBoardDeleteBeforeRecommendTest() {
+        //given
+        boardService.boardInsert(boardDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+
+        //when
+
+        //then
+        assertEquals(boardService.boardRecommendDelete(boardDto.getBoardId(), accountDto.getAccountId()), 1);
+        assertEquals(boardService.boardRecommendList(accountDto.getAccountId()).size(), 0);
+        assertEquals(boardService.boardRecommendCount(boardDto.getBoardId()), 0);
+    }
+
+    @Test
+    @DisplayName("board 추천취소하기 테스트 - 추천안했던거 추천취소")
+    @Transactional
+    void AccountRecommendBoardDeleteDoNotRecommendTest() {
+        //given
+        boardService.boardInsert(boardDto);
+
+        //when
+        boardService.boardRecommendDelete(boardDto.getBoardId(), accountDto.getAccountId());
+
+        //then
+        assertEquals(boardService.boardRecommendDelete(boardDto.getBoardId(), accountDto.getAccountId()), null);
+    }
+
+    @Test
+    @DisplayName("board 추천수 가져오기 테스트")
+    @Transactional
+    void AccountRecommendBoardCountTest() {
+        //given
+        boardService.boardInsert(boardDto);
+        //when
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+        accountDto.setAccountEmail("test2@test.com");
+        accountService.accountInsert(accountDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+        accountDto.setAccountEmail("test3@test.com");
+        accountService.accountInsert(accountDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+
+        //then
+        assertEquals(boardService.boardRecommendCount(boardDto.getBoardId()), 3);
+    }
+
+    @Test
+    @DisplayName("board 추천 게시글 리스트 가져오기 테스트 (기본정렬 최근시간순)")
+    @Transactional
+    void AccountRecommendBoardListTest() {
+        List<Integer> ExpectrecommendBoard = new ArrayList<>();
+        List<Integer> ActualrecommendBoard;
+
+        //given
+        boardService.boardInsert(boardDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+        ExpectrecommendBoard.add(boardDto.getBoardId());
+
+        boardService.boardInsert(boardDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+        ExpectrecommendBoard.add(boardDto.getBoardId());
+
+        boardService.boardInsert(boardDto);
+        boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
+        ExpectrecommendBoard.add(boardDto.getBoardId());
+
+        //when
+        ActualrecommendBoard = boardService.boardRecommendList(accountDto.getAccountId());
+
+        //then
+        assertEquals(ExpectrecommendBoard.size(), ActualrecommendBoard.size());
+        for(int i=0;i<ExpectrecommendBoard.size();i++) {
+            assertEquals(ExpectrecommendBoard.get(ExpectrecommendBoard.size()-1-i), ActualrecommendBoard.get(i));
+        }
+    }
 }

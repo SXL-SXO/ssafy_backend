@@ -50,21 +50,30 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Integer boardRecommend(Integer boardId, Integer accountId, int boardRecommend) {
-        List<BoardDto> likeRecommend =  boardDao.boardRecommendList(accountId));
-        for(BoardDto boardDto : likeRecommend){
-            if(boardDto.getBoardId().equals(boardId)) return null;
+    public Integer boardRecommendInsert(Integer boardId, Integer accountId) {
+        List<Integer> likeRecommend =  boardDao.boardRecommendList(accountId);
+        for(Integer likeBoardId : likeRecommend){
+            if(likeBoardId.equals(boardId)) return null;
         }
-        return 1;
+        return boardDao.boardRecommendInsert(boardId, accountId);
+    }
+    @Override
+    public Integer boardRecommendDelete(Integer boardId, Integer accountId) {
+        List<Integer> likeRecommend =  boardDao.boardRecommendList(accountId);
+        for(Integer likeBoardId : likeRecommend){
+            if(likeBoardId.equals(boardId)) return boardDao.boardRecommendDelete(boardId, accountId);
+        }
+        return null;
     }
 
     @Override
-    public List<BoardDto> boardRecommendList(Integer AccountId) {
-        return boardDao.boardRecommendList(AccountId);
+    public List<Integer> boardRecommendList(Integer accountId) {
+        List<Integer> result =  boardDao.boardRecommendList(accountId);
+        return boardDao.boardRecommendList(accountId);
     }
 
     @Override
-    public List<CommentDto> commentList(Integer boardId) {
-        return commentDao.commentList(boardId);
+    public int boardRecommendCount(Integer boardId) {
+        return boardDao.boardRecommendCount(boardId);
     }
 }
