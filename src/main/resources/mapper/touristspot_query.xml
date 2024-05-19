@@ -6,7 +6,7 @@
 
     <select id="findAll" parameterType="com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from touristspot
+        from tourist_spot
         limit #{pageSize} offset #{pageNum}
     </select>
 
@@ -33,7 +33,7 @@
 
     <select id="findById" parameterType="int" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from touristspot
+        from tourist_spot
         where touristspot_id = #{touristspotId}
     </select>
 
