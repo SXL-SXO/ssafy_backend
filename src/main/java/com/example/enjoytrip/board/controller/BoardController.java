@@ -5,6 +5,7 @@ import com.example.enjoytrip.board.service.BoardService;
 import com.example.enjoytrip.common.dto.PageDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +15,32 @@ import java.util.Map;
 @RestController
 @RequestMapping("/boards")
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
 
-    BoardService boardService;
+    private final BoardService boardService;
 
-    @GetMapping("/{pageSize}/{pageNum}")
-    public List<BoardDto> boardList(@PathVariable("pageSize") int pageSize, @PathVariable("pageNum") int pageNum){
-        PageDto pageDto = new PageDto(pageSize, pageNum);
+    @GetMapping()
+    public List<BoardDto> boardList(
+            @RequestParam int pageSize,
+            @RequestParam int pageLimit){
+        log.info("pageSize = {}", pageSize);
+        PageDto pageDto = new PageDto(pageSize, pageLimit);
         List<BoardDto> list = boardService.boardList(pageDto);
         return list;
     }
+
+    /*@GetMapping()
+    public List<BoardDto> boardList(@RequestBody Map<String, String> option){
+        log.info("requestbody = {}", option);
+        Integer pageSize = Integer.parseInt(option.getOrDefault("pageSize","0"));
+        Integer pageLimit = Integer.parseInt(option.getOrDefault("pageLimit","0"));
+        PageDto pageDto = new PageDto(pageSize, pageLimit);
+        List<BoardDto> list = boardService.boardList(pageDto);
+        return list;
+    }
+
+    */
     @GetMapping("/{boardId}")
     public BoardDto boardDetail(@PathVariable("boardId") int boardId){
         BoardDto dto = boardService.boardDetail(boardId);
