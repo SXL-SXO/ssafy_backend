@@ -1,9 +1,11 @@
-package com.example.enjoytrip.account.Service;
+package com.example.enjoytrip.account.service;
 
 import com.example.enjoytrip.account.dao.AccountDao;
 import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.account.dto.AccountMbti;
-import com.example.enjoytrip.account.service.AccountService;
+import com.example.enjoytrip.board.dao.BoardDao;
+import com.example.enjoytrip.board.dto.BoardDto;
+import com.example.enjoytrip.board.service.BoardService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,23 +16,30 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.enjoytrip.account.dto.AccountRole.USER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @SpringBootTest
 public class AccountServiceTest {
     @Autowired
     AccountDao accountDao;
     @Autowired
     AccountService accountService;
+    @Autowired
+    BoardDao boardDao;
+    @Autowired
+    BoardService boardService;
 
     @Autowired
     MockMvc mockMvc;
 
     AccountDto accountDto = null;
+    BoardDto boardDto = null;
 
     @Test
     @DisplayName("의존성 주입 테스트")
@@ -46,6 +55,10 @@ public class AccountServiceTest {
         accountDto.setAccountRole(USER);
         accountDto.setAccountNickname("김싸피");
 
+        boardDto = new BoardDto();
+        boardDto.setTouristspotId(1);
+        boardDto.setBoardTitle("글제목");
+        boardDto.setBoardContent("글내용");
     }
 
     @Test
@@ -173,5 +186,31 @@ public class AccountServiceTest {
 
         //then
         assertEquals(null,result);
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("본인이 작성한 게시글 확인")
+    void AccountBoardTest(){
+        List<Integer> ExpectedWriteBoard= new ArrayList<>();
+        List<BoardDto> ActualWriteBoard;
+
+        //give
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
+        boardDto.setAccountNickname(accountDto.getAccountNickname());
+        boardService.boardInsert(boardDto);
+        ExpectedWriteBoard.add(boardDto.getBoardId());
+        boardService.boardInsert(boardDto);
+        ExpectedWriteBoard.add(boardDto.getBoardId());
+        boardService.boardInsert(boardDto);
+        ExpectedWriteBoard.add(boardDto.getBoardId());
+
+        //when
+        ActualWriteBoard = accountService.accountBoard(accountDto.getAccountId());
+
+        for(int i=0;i<ExpectedWriteBoard.size();i++){
+            assertEquals(ExpectedWriteBoard.get(i),ActualWriteBoard.get(i).getBoardId());
+        }
     }
 }

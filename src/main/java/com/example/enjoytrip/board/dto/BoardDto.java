@@ -1,6 +1,6 @@
 package com.example.enjoytrip.board.dto;
 
-import com.example.enjoytrip.comment.domain.CommentDto;
+import com.example.enjoytrip.comment.dto.CommentDto;
 import lombok.*;
 
 import java.util.List;

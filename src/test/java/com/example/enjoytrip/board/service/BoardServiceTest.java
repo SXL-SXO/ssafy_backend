@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @SpringBootTest
 class BoardServiceTest {
 

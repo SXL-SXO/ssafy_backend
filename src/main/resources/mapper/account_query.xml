@@ -43,4 +43,20 @@
         where account_email = #{accountEmail} and account_password = #{accountPassword}
     </select>
 
+    <select id="accountBoard">
+        select board_id, board_title from board
+         where account_id = #{accountId}
+    </select>
+
+    <select id="accountComment">
+        select board_id, board_title
+          from board INNER JOIN (select board_id from comment where account_id = #{accountId} )
+    </select>
+
+<!--    게시글에 대한 좋아요 테이블과 게시글테이블이 있으면 게시글이 더 작을까? 그렇다고 생각-->
+    <select id="accountRecommendBoard">
+        select board_id, board_title
+          from board INNER JOIN (select boardId from like_board where account_id = #{accountId})
+    </select>
+
 </mapper>

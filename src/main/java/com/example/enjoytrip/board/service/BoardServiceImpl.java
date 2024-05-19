@@ -3,7 +3,6 @@ package com.example.enjoytrip.board.service;
 import com.example.enjoytrip.board.dao.BoardDao;
 import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.comment.dao.CommentDao;
-import com.example.enjoytrip.comment.domain.CommentDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import lombok.*;
 import org.springframework.stereotype.Service;

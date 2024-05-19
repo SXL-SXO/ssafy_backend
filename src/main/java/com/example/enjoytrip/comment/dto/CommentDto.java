@@ -1,4 +1,4 @@
-package com.example.enjoytrip.comment.domain;
+package com.example.enjoytrip.comment.dto;
 
 import lombok.*;
 
@@ -10,8 +10,9 @@ import lombok.*;
 @ToString
 public class CommentDto {
     private int commentId;
-    private int commentBoardId;
-    private int commentAccountId;
-    private String commentAccountNickname;
     private String commentContent;
+
+    private int boardId;
+    private int accountId;
+    private String accountNickname;
 }

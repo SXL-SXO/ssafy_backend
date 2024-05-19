@@ -1,6 +1,9 @@
 package com.example.enjoytrip.account.dto;
 
+import com.example.enjoytrip.board.dto.BoardDto;
 import lombok.*;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -15,4 +18,9 @@ public class AccountDto {
 
     private AccountRole accountRole;
     private AccountMbti accountMbti;
+
+    private List<BoardDto> accountBoard;
+    private List<BoardDto> accountComment;
+    private List<BoardDto> accountRecommendBoard;
+    private List<BoardDto> accountRecommendSpot;
 }

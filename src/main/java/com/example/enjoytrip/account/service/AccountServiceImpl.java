@@ -2,11 +2,13 @@ package com.example.enjoytrip.account.service;
 
 import com.example.enjoytrip.account.dao.AccountDao;
 import com.example.enjoytrip.account.dto.AccountDto;
+import com.example.enjoytrip.board.dto.BoardDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional(readOnly = true)
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -19,12 +21,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public int accountUpdate(AccountDto accountDto) {
+    public Integer accountUpdate(AccountDto accountDto) {
         return accountDao.accountUpdate(accountDto);
     }
 
     @Override
-    public int accountDelete(Integer accountId) {
+    public Integer accountDelete(Integer accountId) {
         return accountDao.accountDelete(accountId);
     }
 
@@ -47,4 +49,24 @@ public class AccountServiceImpl implements AccountService {
     public Integer login(String accountEmail, String accountPassword) {
         return accountDao.login(accountEmail, accountPassword);
     }
+
+    @Override
+    public List<BoardDto> accountBoard(Integer accountId) {
+        return accountDao.accountBoard(accountId);
+    }
+
+    @Override
+    public List<BoardDto> accountComment(Integer accountId) {
+        return accountDao.accountComment(accountId);
+    }
+
+    @Override
+    public List<BoardDto> accountRecommendBoard(Integer accountId) {
+        return accountDao.accountRecommendBoard(accountId);
+    }
+
+//    @Override
+//    public List<BoardDto> accountRecommendSpot(Integer accountId) {
+//        return accountDao.accountRecommendSpot(accountId);
+//    }
 }

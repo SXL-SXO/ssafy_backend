@@ -9,7 +9,7 @@
     <mappers>
 <!--        <mapper resource="mapper/touristspot_query.xml" />-->
         <mapper resource="mapper/account_query.xml" />
-<!--        <mapper resource="mapper/comment_query.xml" />-->
+        <mapper resource="mapper/comment_query.xml" />
         <mapper resource="mapper/board_query.xml" />
     </mappers>
 </configuration>

@@ -1,8 +1,6 @@
 package com.example.enjoytrip.board.service;
 
-import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.board.dto.BoardDto;
-import com.example.enjoytrip.comment.domain.CommentDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import org.springframework.transaction.annotation.Transactional;
 

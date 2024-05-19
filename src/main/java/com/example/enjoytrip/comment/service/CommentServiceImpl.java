@@ -1,7 +1,7 @@
 package com.example.enjoytrip.comment.service;
 
 import com.example.enjoytrip.comment.dao.CommentDao;
-import com.example.enjoytrip.comment.domain.CommentDto;
+import com.example.enjoytrip.comment.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +13,27 @@ public class CommentServiceImpl implements CommentService{
     private final CommentDao commentDao;
 
     @Override
-    public List<CommentDto> commentList(int commentBoardId) {
+    public List<CommentDto> commentList(Integer commentBoardId) {
         return commentDao.commentList(commentBoardId);
     }
 
     @Override
-    public CommentDto commentDetail(int commentId) {
+    public CommentDto commentDetail(Integer commentId) {
         return commentDao.commentDetail(commentId);
     }
 
     @Override
-    public int commentInsert(CommentDto commentDto) {
+    public Integer commentInsert(CommentDto commentDto) {
         return commentDao.commentInsert(commentDto);
     }
 
     @Override
-    public int commentUpdate(CommentDto commentDto) {
+    public Integer commentUpdate(CommentDto commentDto) {
         return commentDao.commentUpdate(commentDto);
     }
 
     @Override
-    public int commentDelete(int commentId) {
+    public Integer commentDelete(Integer commentId) {
         return commentDao.commentDelete(commentId);
     }
 }

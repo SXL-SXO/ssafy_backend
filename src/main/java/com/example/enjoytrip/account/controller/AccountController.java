@@ -3,9 +3,12 @@ package com.example.enjoytrip.account.controller;
 import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.account.dto.AccountMbti;
 import com.example.enjoytrip.account.service.AccountService;
+import com.example.enjoytrip.board.dto.BoardDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 // 회원정보관련
 @RequiredArgsConstructor
@@ -35,6 +38,19 @@ public class AccountController {
     @DeleteMapping("/{accountId}")
     public Integer accountDelete(@PathVariable("accountId") Integer accountId){
         return accountService.accountDelete(accountId);
+    }
+
+    @GetMapping("/board/{accountId}")
+    public List<BoardDto> accountBoard(@PathVariable("accountId") Integer accountId){
+        return accountService.accountBoard(accountId);
+    }
+    @GetMapping("/comment/{accountId}")
+    public List<BoardDto> accountComment(@PathVariable("accountId") Integer accountId){
+        return accountService.accountComment(accountId);
+    }
+    @GetMapping("/recommendboard/{accountId}")
+    public List<BoardDto> accountRecommendBoard(@PathVariable("accountId") Integer accountId){
+        return accountService.accountRecommendBoard(accountId);
     }
 
 }

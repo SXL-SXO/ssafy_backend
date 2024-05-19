@@ -7,7 +7,7 @@
 <mapper namespace="com.example.enjoytrip.comment.dao.CommentDao">
     <!-- nickname 저장하지 안허고 나중에 테이블 조인
 
-    <select id= "commentList" resultType="com.example.enjoytrip.comment.domain.CommentDto">
+    <select id= "commentList" resultType="com.example.enjoytrip.comment.dto.CommentDto">
         select comment_id, comment_content
           from comment
          where comment_board_id = #{commentBoardId};
@@ -15,31 +15,31 @@
 
     <insert id ="commentInsert" useGeneratedKeys="true"
             keyProperty="commentId" keyColumn="comment_id"
-            parameterType="com.example.enjoytrip.comment.domain.CommentDto">
+            parameterType="com.example.enjoytrip.comment.dto.CommentDto">
         insert into comment (comment_board_id, comment_account_id, comment_content)
              values (#{commentBoardId},#{commentAccountId},#{commentContent})
     </insert>
     -->
 
     <!-- 닉네임 저장-->
-    <select id= "commentList" resultType="com.example.enjoytrip.comment.domain.CommentDto">
-        select comment_id, comment_content, comment_account_nickname
+    <select id= "commentList" resultType="com.example.enjoytrip.comment.dto.CommentDto">
+        select comment_id, comment_content, account_nickname
         from comment
-        where comment_board_id = #{commentBoardId};
+        where board_id = #{boardId};
     </select>
 
     <insert id ="commentInsert" useGeneratedKeys="true"
             keyProperty="commentId" keyColumn="comment_id"
-            parameterType="com.example.enjoytrip.comment.domain.CommentDto">
-        insert into comment (comment_board_id, comment_account_id, comment_content, comment_account_nickname)
-        values (#{commentBoardId},#{commentAccountId},#{commentContent},
+            parameterType="com.example.enjoytrip.comment.dto.CommentDto">
+        insert into comment (board_id, account_id, comment_content, account_nickname)
+        values (#{boardId},#{accountId},#{commentContent},
                    (select account_nickname
                       from account
-                     where account_id = #{commentAccountId})
+                     where account_id = #{accountId})
                )
     </insert>
 
-    <update id = "commentUpdate" parameterType="com.example.enjoytrip.comment.domain.CommentDto">
+    <update id = "commentUpdate" parameterType="com.example.enjoytrip.comment.dto.CommentDto">
         update comment
         set comment_content = #{commentContent}
         where comment_id = #{commentId}
