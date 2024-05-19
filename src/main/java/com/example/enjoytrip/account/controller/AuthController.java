@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 public class AuthController {
+
     private final AccountService accountService;
 
     @GetMapping("/login")
