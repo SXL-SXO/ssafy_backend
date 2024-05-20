@@ -16,7 +16,7 @@ public interface AccountService {
 
     Integer findByEmail(String accountEmail);
 
-    AccountDto login(AccountDto accountDto);
+    AccountDto login(String accountEmail, String accountPassword);
 
     List<BoardDto> accountBoard(Integer accountId);
     List<BoardDto> accountComment(Integer accountId);

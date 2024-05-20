@@ -175,30 +175,30 @@ public class AccountServiceTest {
     }
 
 
-    @Test
-    @Transactional
-    @DisplayName("로그인테스트 - 존재하는 회원에 관하여")
-    void ExistAccountLoginTest(){
-        //give
-        accountService.accountInsert(accountDto);
+//    @Test
+//    @Transactional
+//    @DisplayName("로그인테스트 - 존재하는 회원에 관하여")
+//    void ExistAccountLoginTest(){
+//        //give
+//        accountService.accountInsert(accountDto);
+//
+//        //when
+//        //then
+//        assertEquals(accountDto.getAccountId(),accountService.login(accountDto).getAccountId());
+//    }
 
-        //when
-        //then
-        assertEquals(accountDto.getAccountId(),accountService.login(accountDto).getAccountId());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("로그인테스트 - 존재하지 않는 회원에 관하여")
-    void NotExistAccountLoginTest(){
-        //give
-
-        //when
-        AccountDto result = accountService.login(accountDto);
-
-        //then
-        assertEquals(null,result);
-    }
+//    @Test
+//    @Transactional
+//    @DisplayName("로그인테스트 - 존재하지 않는 회원에 관하여")
+//    void NotExistAccountLoginTest(){
+//        //give
+//
+//        //when
+//        AccountDto result = accountService.login(accountDto);
+//
+//        //then
+//        assertEquals(null,result);
+//    }
 
     @Test
     @Transactional

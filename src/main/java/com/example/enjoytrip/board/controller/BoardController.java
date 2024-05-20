@@ -22,10 +22,10 @@ public class BoardController {
 
     @GetMapping()
     public List<BoardDto> boardList(
-            @RequestParam int pageSize,
-            @RequestParam int pageNum,
-            @RequestParam String searchWord){
-        log.info("pageSize = {}", pageSize);
+            @RequestParam (required = false) Integer pageSize,
+            @RequestParam (required = false) Integer pageNum,
+            @RequestParam (required = false) String searchWord){
+//        log.info("pageSize = {}", pageSize);
         PageDto pageDto = new PageDto(pageSize, pageNum, searchWord);
         List<BoardDto> list = boardService.boardList(pageDto);
         return list;

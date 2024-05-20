@@ -7,7 +7,7 @@ import lombok.*;
 @Getter @Setter @Builder
 @ToString
 public class PageDto {
-    private int pageSize;
-    private int pageNum;
+    private Integer pageSize;
+    private Integer pageNum;
     private String searchWord;
 }

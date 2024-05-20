@@ -46,7 +46,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto login(AccountDto accountDto) {
+    public AccountDto login(String accountEmail, String accountPassword) {
+        System.out.println("serviceImpl");
+        AccountDto accountDto = new AccountDto();
+        accountDto.setAccountEmail(accountEmail);
+        accountDto.setAccountPassword(accountPassword);
         return accountDao.login(accountDto);
     }
 
