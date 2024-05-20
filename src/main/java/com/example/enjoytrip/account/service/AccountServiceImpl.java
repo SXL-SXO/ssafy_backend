@@ -46,8 +46,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Integer login(String accountEmail, String accountPassword) {
-        return accountDao.login(accountEmail, accountPassword);
+    public AccountDto login(AccountDto accountDto) {
+        return accountDao.login(accountDto);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface AccountDao {
     AccountDto findById (Integer accountId);
     AccountDto findByEmail (String accountEmail);
 
-    Integer login (String accountEmail, String accountPassword);
+    AccountDto login (AccountDto accountDto);
 
     List<BoardDto> accountBoard(Integer accountId);
     List<BoardDto> accountComment(Integer accountId);

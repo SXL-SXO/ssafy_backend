@@ -38,8 +38,8 @@
         where account_email = #{accountEmail}
     </select>
 
-    <select id="login" parameterType="string" resultType="Integer">
-        select account_id from account
+    <select id="login" parameterType="com.example.enjoytrip.account.dto.AccountDto" resultType="com.example.enjoytrip.account.dto.AccountDto">
+        select account_id, account_mbti from account
         where account_email = #{accountEmail} and account_password = #{accountPassword}
     </select>
 

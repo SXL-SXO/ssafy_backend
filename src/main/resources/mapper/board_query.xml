@@ -6,11 +6,13 @@
 
 <mapper namespace="com.example.enjoytrip.board.dao.BoardDao">
     <!-- 여기서 특정양만큼의 게시글 보여주기, 닉네임 저장-->
-    <select id= "boardList" resultType="com.example.enjoytrip.board.dto.BoardDto">
-        select board_id, touristspot_id, board_title, board_content, account_nickname
-                 from board
-             order by board_id
-                limit #{pageSize} offset #{pageNum}
+    <select id= "boardList" parameterType = "com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.board.dto.BoardDto">
+        select board_id, touristspot_id, board_title, board_content, account_nickname, board_category
+          from board
+        <if test='searchWord!=null'>where board_title like concat('%', #{searchWord}, '%')</if>
+
+      order by board_id
+         limit #{pageSize} offset #{pageNum}
     </select>
 
     <select id= "boardDetail" parameterType = "int" resultType = "com.example.enjoytrip.board.dto.BoardDto">
@@ -23,8 +25,8 @@
     <insert id ="boardInsert" useGeneratedKeys="true"
             keyProperty="boardId" keyColumn="board_id"
             parameterType="com.example.enjoytrip.board.dto.BoardDto">
-        insert into board (touristspot_id, board_title, board_content, account_id, account_nickname)
-             values (#{touristspotId},#{boardTitle},#{boardContent},#{accountId},
+        insert into board (touristspot_id, board_title, board_content, account_id, board_category, account_nickname)
+             values (#{touristspotId},#{boardTitle},#{boardContent},#{accountId}, #{boardCategory},
                      (select account_nickname
                        from account
                       where account_id = #{accountId}
@@ -38,19 +40,13 @@
               , touristspot_id = #{touristspotId}
               , board_title = #{boardTitle}
               , board_content = #{boardContent}
-              , account_nickname =
-            (
-                select account_nickname as account_nickname
-                from account
-                where account_id = #{accountId}
-            )
+              , board_category = #{boardCategory}
         where board_id = #{boardId}
     </update>
 
     <delete id = "boardDelete" parameterType="Integer">
         delete from board where board_id = #{boardId}
     </delete>
-
 
     <select id = "boardRecommendList" parameterType="Integer">
         select board_id from like_board where account_id = #{accountId} order by board_id desc
@@ -65,5 +61,6 @@
     <delete id = "boardRecommendDelete" parameterType="Integer">
         delete from like_board where board_id = #{boardId} and account_id = #{accountId}
     </delete>
+
 
 </mapper>

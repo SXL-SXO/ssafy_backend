@@ -14,7 +14,7 @@ public class AuthController {
     private final AccountService accountService;
 
     @GetMapping("/login")
-    public Integer login(@RequestParam AccountDto accountDto){
-        return accountService.login(accountDto.getAccountEmail(), accountDto.getAccountPassword());
+    public AccountDto login(@RequestParam AccountDto accountDto){
+        return accountService.login(accountDto);
     }
 }

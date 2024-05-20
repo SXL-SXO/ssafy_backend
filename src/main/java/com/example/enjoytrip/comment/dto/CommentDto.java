@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class CommentDto {
-    private int commentId;
+    private Integer commentId;
     private String commentContent;
 
-    private int boardId;
-    private int accountId;
+    private Integer boardId;
+    private Integer accountId;
     private String accountNickname;
 }

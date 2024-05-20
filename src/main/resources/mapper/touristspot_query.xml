@@ -12,21 +12,21 @@
 
     <select id="findBySido" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from touristspot
+        from tourist_spot
         where touristspot_sido_code = #{sidoCode}
         limit #{pageDto.pageSize} offset #{pageDto.pageNum}
     </select>
 
     <select id="findByGugun" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from touristspot
+        from tourist_spot
         where touristspot_gugun_code = #{gugunCode}
         limit #{pageDto.pageSize} offset #{pageDto.pageNum}
     </select>
 
     <select id="findByKeyword" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from touristspot
+        from tourist_spot
         where touristspot_title like concat('%', #{keyword}, '%')
         limit #{pageDto.pageSize} offset #{pageDto.pageNum}
     </select>

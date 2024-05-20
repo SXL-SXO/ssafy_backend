@@ -27,6 +27,11 @@
         from comment
         where board_id = #{boardId};
     </select>
+    <select id= "commentDetail" resultType="com.example.enjoytrip.comment.dto.CommentDto">
+        select *
+        from comment
+        where comment_id = #{commentId};
+    </select>
 
     <insert id ="commentInsert" useGeneratedKeys="true"
             keyProperty="commentId" keyColumn="comment_id"

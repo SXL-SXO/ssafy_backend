@@ -4,6 +4,7 @@ import com.example.enjoytrip.account.dao.AccountDao;
 import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.account.service.AccountService;
 import com.example.enjoytrip.board.dao.BoardDao;
+import com.example.enjoytrip.board.dto.BoardCategory;
 import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@Transactional
 class BoardServiceTest {
 
     @Autowired
@@ -49,19 +51,19 @@ class BoardServiceTest {
         assertNotNull(boardService);
     }
 
+    @Transactional
     @BeforeEach
     void beforeEach() {
         accountDto = new AccountDto();
         accountDto.setAccountNickname("테스트");
-        accountDto.setAccountEmail("KHG@test.com");
+        accountDto.setAccountEmail("KHG3@test.com");
         accountDto.setAccountPassword("1234");
-        accountService.accountInsert(accountDto);
 
         boardDto = new BoardDto();
         boardDto.setTouristspotId(1);
         boardDto.setBoardTitle("배고파");
         boardDto.setBoardContent("안된다");
-        boardDto.setAccountId(accountDto.getAccountId());
+        boardDto.setBoardCategory(BoardCategory.REVIEW);
     }
 
     @Test
@@ -73,6 +75,7 @@ class BoardServiceTest {
         dto.setTouristspotId(1);
         dto.setBoardTitle("배고파");
         dto.setBoardContent("안된다");
+        dto.setBoardCategory(BoardCategory.REVIEW);
         dto.setAccountId(1);
 
         //when, then
@@ -84,6 +87,8 @@ class BoardServiceTest {
     @Transactional
     void testboardUpdate() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //when
@@ -128,6 +133,8 @@ class BoardServiceTest {
     @Transactional
     void testboardDelete() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //when, then
@@ -139,6 +146,9 @@ class BoardServiceTest {
     @Transactional
     void testboartList() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
+
         boardService.boardInsert(boardDto);
         boardService.boardInsert(boardDto);
         boardService.boardInsert(boardDto);
@@ -150,10 +160,45 @@ class BoardServiceTest {
         boardService.boardInsert(boardDto);
 
         //when
-        pageDto = new PageDto(3, 1);
+        pageDto = new PageDto(3, 1,null);
 
         //then
         assertEquals(boardService.boardList(pageDto).size(), 3);
+    }
+
+    @Test
+    @DisplayName("board 조회 테스트 -- 검색어가 있을때는 검색어 ")
+    @Transactional
+    void testboartListWithSearchWord() {
+        //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
+
+        //when
+        boardDto.setBoardTitle("감자 맛있어");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("감자 최고");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("토마토 맛있어");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("토마토 최고");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("감자랑 토마토 다 좋아");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("감자랑 토마토 다 싫어");
+        boardService.boardInsert(boardDto);
+        boardDto.setBoardTitle("추천받습니다");
+        boardService.boardInsert(boardDto);
+
+        //then
+        pageDto = new PageDto(10, 0,"감자");
+        assertEquals(boardService.boardList(pageDto).size(), 4);
+
+        pageDto = new PageDto(10, 0,"토마토");
+        assertEquals(boardService.boardList(pageDto).size(), 4);
+
+        pageDto = new PageDto(10, 0,"최고");
+        assertEquals(boardService.boardList(pageDto).size(), 2);
     }
 
     @Test
@@ -161,6 +206,8 @@ class BoardServiceTest {
     @Transactional
     void testboartDetail() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //then
@@ -176,6 +223,8 @@ class BoardServiceTest {
     @Transactional
     void FirstAccountRecommendBoardTest() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //when, then
@@ -187,6 +236,8 @@ class BoardServiceTest {
     @Transactional
     void SecondAccountRecommendBoardTest() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //when
@@ -201,6 +252,8 @@ class BoardServiceTest {
     @Transactional
     void AccountRecommendBoardDeleteBeforeRecommendTest() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
         boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
 
@@ -217,6 +270,8 @@ class BoardServiceTest {
     @Transactional
     void AccountRecommendBoardDeleteDoNotRecommendTest() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
 
         //when
@@ -231,6 +286,8 @@ class BoardServiceTest {
     @Transactional
     void AccountRecommendBoardCountTest() {
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
         //when
         boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
@@ -253,6 +310,8 @@ class BoardServiceTest {
         List<Integer> ActualrecommendBoard;
 
         //given
+        accountService.accountInsert(accountDto);
+        boardDto.setAccountId(accountDto.getAccountId());
         boardService.boardInsert(boardDto);
         boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId());
         ExpectrecommendBoard.add(boardDto.getBoardId());
