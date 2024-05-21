@@ -6,7 +6,8 @@
 
     <select id="findAll" parameterType="com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
-        from tourist_spot
+        from tourist_spot, review
+        where tourist_spot.touristspot_id = review.touristspot_id
         limit #{pageSize} offset #{pageNum}
     </select>
 
@@ -44,6 +45,13 @@
           AND touristspot_longitude &lt;= #{touristCoordinateDto.eastLongitude} AND touristspot_longitude &gt;= #{touristCoordinateDto.westLongitude}
             LIMIT #{pageDto.pageSize} OFFSET #{pageDto.pageNum}
     </select>
+
+    <select id="relatedBoard" parameterType="map" resultType="com.example.enjoytrip.board.dto.BoardDto">
+        SELECT *
+        FROM board
+        WHERE touristspot_id = #{touristSpotId}
+    </select>
+
 
 
 

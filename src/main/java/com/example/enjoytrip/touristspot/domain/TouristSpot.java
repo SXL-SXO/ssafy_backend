@@ -18,4 +18,12 @@ public class TouristSpot {
     private BigDecimal touristspotLatitude;
     private BigDecimal touristspotLongitude;
     private Integer touristspotLike;
+    private Integer likeE;
+    private Integer likeI;
+    private Integer likeS;
+    private Integer likeN;
+    private Integer likeF;
+    private Integer likeT;
+    private Integer likeP;
+    private Integer likeJ;
 }

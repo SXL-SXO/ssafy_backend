@@ -1,5 +1,6 @@
 package com.example.enjoytrip.touristspot.controller;
 
+import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.dto.TouristCoordinateDto;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
@@ -15,7 +16,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping(value = "/touristspot")
 public class TouristspotController {
-
     private final TouristspotService TouristspotService;
 
     @GetMapping
@@ -23,6 +23,13 @@ public class TouristspotController {
         List<TouristSpot> touristspots = TouristspotService.findAll(pageDto);
 
         return ResponseEntity.ok().body(touristspots);
+    }
+
+    @GetMapping("/relativeBoard/{touristSpotId}")
+    public ResponseEntity<List<BoardDto>> relatedBoard(@PathVariable("touristSpotId") int touristSpotId, PageDto pageDto) {
+        List<BoardDto> boardDto = TouristspotService.relatedBoard(touristSpotId, pageDto);
+
+        return ResponseEntity.ok().body(boardDto);
     }
 
     @GetMapping("/sido/{sidoCode}")
@@ -44,6 +51,7 @@ public class TouristspotController {
     @GetMapping("/keyword/{keyword}")
     public ResponseEntity<List<TouristSpot>> findByKeyword(@PathVariable("keyword") String keyword,
                                                            PageDto pageDto){
+        System.out.println(keyword);
         List<TouristSpot> byKeyword = TouristspotService.findByKeyword(keyword, pageDto);
 
         return ResponseEntity.ok().body(byKeyword);

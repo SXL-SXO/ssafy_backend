@@ -1,5 +1,6 @@
 package com.example.enjoytrip.touristspot.dao;
 
+import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
 import com.example.enjoytrip.touristspot.dto.TouristCoordinateDto;
@@ -13,6 +14,7 @@ import java.util.Objects;
 public interface TouristspotDao {
 
     List<TouristSpot> findAll(PageDto pageDto);
+    List<BoardDto> relatedBoard(Map<String, Object> map);
     List<TouristSpot> findBySido(Map<String, Object> map);
     List<TouristSpot> findByGugun(Map<String, Object> map);
     List<TouristSpot> findByKeyword(Map<String, Object> map);

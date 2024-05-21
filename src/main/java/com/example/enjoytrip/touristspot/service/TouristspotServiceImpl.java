@@ -1,5 +1,6 @@
 package com.example.enjoytrip.touristspot.service;
 
+import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.dao.TouristspotDao;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
@@ -22,6 +23,14 @@ public class TouristspotServiceImpl implements TouristspotService{
     @Override
     public List<TouristSpot> findAll(PageDto pageDto) {
         return touristspotDao.findAll(pageDto);
+    }
+
+    @Override
+    public List<BoardDto> relatedBoard(int touristSpotId, PageDto pageDto) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("touristSpotId", touristSpotId);
+        map.put("pageDto", pageDto);
+        return touristspotDao.relatedBoard(map);
     }
 
     @Override
