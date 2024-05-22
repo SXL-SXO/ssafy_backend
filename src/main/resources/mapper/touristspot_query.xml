@@ -52,6 +52,26 @@
         WHERE touristspot_id = #{touristSpotId}
     </select>
 
+    <delete id = "touristspotDelete" parameterType="Integer">
+        delete from board where board_id = #{touristSpotId}
+    </delete>
+
+    <select id = "touristspotRecommendList" parameterType="Integer">
+        select touristpot_id from like_spot where account_id = #{accountId} order by touristpot_id desc
+    </select>
+
+    <select id = "touristspotRecommendCount" parameterType="Integer">
+        select count(account_id) from like_spot where touristpot_id = #{touristSpotId}
+    </select>
+
+    <insert id = "touristspotRecommendInsert">
+        insert into like_spot (touristpot_id, account_id)
+        values (#{touristspotId}, #{accountId})
+    </insert>
+
+    <delete id = "touristspotRecommendDelete" parameterType="Integer">
+        delete from like_spot where touristpot_id = #{touristspotId} and account_id = #{accountId}
+    </delete>
 
 
 

@@ -21,4 +21,9 @@ public interface TouristspotDao {
     TouristSpot findById(int touristspotId);
     List<TouristSpot> findByCoordinates(Map<String, Object> map);
 
+    Integer touristspotRecommendInsert(Integer touristspotId, Integer accountId);
+    Integer touristspotRecommendDelete(Integer touristspotId, Integer accountId);
+    List<Integer> touristspotRecommendList(Integer accountId);
+    int touristspotRecommendCount(Integer boardId);
+
 }
