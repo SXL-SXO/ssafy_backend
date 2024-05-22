@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 @RequiredArgsConstructor
 @Service
 public class TouristspotServiceImpl implements TouristspotService{
@@ -74,5 +74,33 @@ public class TouristspotServiceImpl implements TouristspotService{
         map.put("pageDto", pageDto);
         map.put("touristCoordinateDto", touristCoordinateDto);
         return touristspotDao.findByCoordinates(map);
+    }
+
+    @Override
+    public Integer touristspotRecommendInsert(Integer touristspotId, Integer accountId) {
+        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(accountId);
+        for(Integer liketouristspotId : likeRecommend){
+            if(liketouristspotId.equals(touristspotId)) return null;
+        }
+        return touristspotDao.touristspotRecommendInsert(touristspotId, accountId);
+    }
+
+    @Override
+    public Integer touristspotRecommendDelete(Integer touristspotId, Integer accountId) {
+        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(accountId);
+        for(Integer likeBoardId : likeRecommend){
+            if(likeBoardId.equals(touristspotId)) return touristspotDao.touristspotRecommendDelete(touristspotId, accountId);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Integer> touristspotRecommendList(Integer accountId) {
+        return touristspotDao.touristspotRecommendList(accountId);
+    }
+
+    @Override //추천 수 세기
+    public int touristspotRecommendCount(Integer touristspotId) {
+        return touristspotDao.touristspotRecommendCount(touristspotId);
     }
 }

@@ -16,5 +16,8 @@ public interface TouristspotService {
     List<TouristSpot> findByKeyword(String keyword, PageDto pageDto);
     TouristSpot findById(int touristspotId);
     List<TouristSpot> findByCoordinates(TouristCoordinateDto touristCoordinateDto, PageDto pageDto);
-
+    Integer touristspotRecommendInsert(Integer touristspotId, Integer AccountId);
+    Integer touristspotRecommendDelete(Integer touristspotId, Integer AccountId);
+    List<Integer> touristspotRecommendList(Integer AccountId);
+    int touristspotRecommendCount(Integer touristspotId);
 }
