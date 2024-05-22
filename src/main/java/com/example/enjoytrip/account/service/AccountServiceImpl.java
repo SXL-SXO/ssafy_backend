@@ -3,6 +3,8 @@ package com.example.enjoytrip.account.service;
 import com.example.enjoytrip.account.dao.AccountDao;
 import com.example.enjoytrip.account.dto.AccountDto;
 import com.example.enjoytrip.board.dto.BoardDto;
+import com.example.enjoytrip.exception.CustomException;
+import com.example.enjoytrip.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,11 +49,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto login(String accountEmail, String accountPassword) {
-        System.out.println("serviceImpl");
         AccountDto accountDto = new AccountDto();
         accountDto.setAccountEmail(accountEmail);
         accountDto.setAccountPassword(accountPassword);
-        return accountDao.login(accountDto);
+        AccountDto result = accountDao.login(accountDto);
+        if(result == null) throw new CustomException(ErrorCode.LoginFail);
+        return result;
     }
 
     @Override

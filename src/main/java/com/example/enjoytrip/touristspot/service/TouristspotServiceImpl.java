@@ -34,6 +34,12 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override
+    public List<BoardDto> relatedTitle(String touristSpotTitle) {
+        System.out.println(touristSpotTitle + "TouristServiceImpl");
+        return touristspotDao.relatedTitle(touristSpotTitle);
+    }
+
+    @Override
     public List<TouristSpot> findBySido(int sidoCode, PageDto pageDto) {
         Map<String, Object> map = new HashMap<>();
         map.put("sidoCode", sidoCode);

@@ -10,4 +10,5 @@ public class PageDto {
     private Integer pageSize;
     private Integer pageNum;
     private String searchWord;
+    private AccountMbti searchMbti;
 }

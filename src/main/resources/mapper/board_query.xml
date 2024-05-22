@@ -7,10 +7,12 @@
 <mapper namespace="com.example.enjoytrip.board.dao.BoardDao">
     <!-- 여기서 특정양만큼의 게시글 보여주기, 닉네임 저장-->
     <select id= "boardList" parameterType = "com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.board.dto.BoardDto">
-        select board_id, touristspot_id, board_title, board_content, account_nickname, board_category
-          from board
-        <if test='searchWord!=null'>where board_title like concat('%', #{searchWord}, '%')</if>
-
+        select board_id, (select t.touristspot_title from tourist_spot t where t.touristspot_id = b.touristspot_id) as touristspot_title,
+               b.touristspot_id, b.board_title, b.board_content, b.board_category, b.account_id, b.account_mbti, b.account_nickname,
+               (select count(account_id) from like_board l where b.board_id = l.board_id) board_recommend_count
+          from board b
+        <if test="searchWord!=null">where b.board_title like concat('%', #{searchWord}, '%')</if>
+        <if test="searchMbti!=null">and b.account_mbti = #{searchMbti}</if>
       order by board_id
          limit #{pageSize} offset #{pageNum}
     </select>
@@ -25,20 +27,13 @@
     <insert id ="boardInsert" useGeneratedKeys="true"
             keyProperty="boardId" keyColumn="board_id"
             parameterType="com.example.enjoytrip.board.dto.BoardDto">
-        insert into board (touristspot_id, board_title, board_content, account_id, board_category, account_nickname)
-             values (#{touristspotId},#{boardTitle},#{boardContent},#{accountId}, #{boardCategory},
-                     (select account_nickname
-                       from account
-                      where account_id = #{accountId}
-                      )
-                 )
+        insert into board (touristspot_id, board_title, board_content, board_category, account_id, account_mbti, account_nickname)
+             values (#{touristspotId},#{boardTitle},#{boardContent}, #{boardCategory},#{accountId}, #{accountMbti}, #{accountNickname})
     </insert>
 
     <update id = "boardUpdate" parameterType="com.example.enjoytrip.board.dto.BoardDto">
         update board
-            set board_id = #{boardId}
-              , touristspot_id = #{touristspotId}
-              , board_title = #{boardTitle}
+            set board_title = #{boardTitle}
               , board_content = #{boardContent}
               , board_category = #{boardCategory}
         where board_id = #{boardId}
