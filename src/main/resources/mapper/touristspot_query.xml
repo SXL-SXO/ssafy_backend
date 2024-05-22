@@ -40,7 +40,7 @@
 
     <select id="findByCoordinates" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         SELECT *
-        FROM touristspot
+        FROM tourist_spot
         WHERE touristspot_latitude &lt;= #{touristCoordinateDto.northLatitude} AND touristspot_latitude &gt;= #{touristCoordinateDto.southLatitude}
           AND touristspot_longitude &lt;= #{touristCoordinateDto.eastLongitude} AND touristspot_longitude &gt;= #{touristCoordinateDto.westLongitude}
             LIMIT #{pageDto.pageSize} OFFSET #{pageDto.pageNum}
@@ -50,6 +50,12 @@
         SELECT *
         FROM board
         WHERE touristspot_id = #{touristSpotId}
+    </select>
+    <select id="relatedTitle" parameterType="String" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
+        SELECT touristspot_id, touristspot_title
+        FROM tourist_spot
+        <if test='touristspotTitle!=null'>where touristspot_title like concat('%', #{touristspotTitle}, '%')</if>
+        order by touristspot_title
     </select>
 
     <delete id = "touristspotDelete" parameterType="Integer">
