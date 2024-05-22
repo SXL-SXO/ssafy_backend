@@ -60,6 +60,7 @@ public class BoardController {
     }
     @PutMapping("/{boardId}")
     public Integer boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto dto){
+        dto.setBoardId(boardId);
         return boardService.boardUpdate(dto);
     }
     @PostMapping
