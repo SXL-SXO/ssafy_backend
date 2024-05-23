@@ -4,7 +4,6 @@ import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.dto.TouristCoordinateDto;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
-import com.example.enjoytrip.touristspot.dto.TouristspotDto;
 import com.example.enjoytrip.touristspot.service.TouristspotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
