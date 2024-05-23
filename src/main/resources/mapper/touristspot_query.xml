@@ -11,6 +11,7 @@
         limit #{pageSize} offset #{pageNum}
     </select>
 
+
     <select id="findByKeyword" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
         from tourist_spot

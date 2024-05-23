@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,6 +31,28 @@ public class TouristspotController {
 
         return ResponseEntity.ok().body(boardDto);
     }
+    @GetMapping("/relativeTitle/{touristSpotTitle}")
+    public ResponseEntity<List<BoardDto>> relatedTitle(@PathVariable("touristSpotTitle") String touristSpotTitle) {
+        List<BoardDto> boardDto = TouristspotService.relatedTitle(touristSpotTitle);
+//        for(BoardDto b : boardDto) System.out.println(b);
+        return ResponseEntity.ok().body(boardDto);
+    }
+
+    @GetMapping("/sido/{sidoCode}")
+    public ResponseEntity<List<TouristSpot>> findBysido(@PathVariable("sidoCode") int sidoCode,
+                                                        PageDto pageDto){
+        List<TouristSpot> bySido = TouristspotService.findBySido(sidoCode, pageDto);
+
+        return ResponseEntity.ok().body(bySido);
+    }
+
+    @GetMapping("/gugun/{gugunCode}")
+    public ResponseEntity<List<TouristSpot>> findByGugun(@PathVariable("gugunCode") int gugunCode,
+                                                         PageDto pageDto){
+        List<TouristSpot> byGugun = TouristspotService.findByGugun(gugunCode, pageDto);
+
+        return ResponseEntity.ok().body(byGugun);
+    }
 
     @GetMapping("/keyword/{keyword}")
     public ResponseEntity<List<TouristSpot>> findByKeyword(@PathVariable("keyword") String keyword,
@@ -42,24 +63,23 @@ public class TouristspotController {
         return ResponseEntity.ok().body(byKeyword);
     }
 
-    @PostMapping("/recommends") //좋아요
-    public Integer touristspotRecommendInsert(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendInsert(recomend.get("touristspotId"), recomend.get("accountId"));
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TouristSpot> getTravel(@PathVariable("id") Integer id) {
+        TouristSpot touristSpot = TouristspotService.findById(id);
+
+        return ResponseEntity.ok(touristSpot);
     }
 
-    @PostMapping("/recommends/delete") //좋아요 취소
-    public Integer touristspotRecommendDelete(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendDelete(recomend.get("touristspotId"), recomend.get("accountId"));
+    @GetMapping("/coordinate")
+    public ResponseEntity<List<TouristSpot>> getTravelsByCoordinate(@RequestBody TouristCoordinateDto TouristCoordinateDto,
+                                                                    PageDto pageDto) {
+
+        List<TouristSpot> byCoordinates = this.TouristspotService.findByCoordinates(TouristCoordinateDto, pageDto);
+
+        return ResponseEntity.ok().body(byCoordinates);
     }
 
-    @GetMapping("/recommends/account/{accountId}") //사용자가 누른 좋아요 게시판 목록
-    public List<Integer> touristspotRecommendList(@PathVariable Integer accountId){
-        return TouristspotService.touristspotRecommendList(accountId);
-    }
-    @GetMapping("/recommends/board/{touristspotId}") //좋아요 갯수 카운트
-    public int touristspotRecommendCount(@PathVariable Integer touristspotId){
-        return TouristspotService.touristspotRecommendCount(touristspotId);
-    }
 
     @PutMapping("/recommends/board/{touristspotId}") //좋아요 mbti update
     public int touristspotRecommendUpdate(@RequestBody Integer touristsopId, @RequestBody String mbti){

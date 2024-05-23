@@ -23,7 +23,7 @@
 
     <!-- 닉네임 저장-->
     <select id= "commentList" resultType="com.example.enjoytrip.comment.dto.CommentDto">
-        select comment_id, comment_content, account_nickname
+        select *
         from comment
         where board_id = #{boardId};
     </select>

@@ -4,6 +4,8 @@ import com.example.enjoytrip.board.dao.BoardDao;
 import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.comment.dao.CommentDao;
 import com.example.enjoytrip.common.dto.PageDto;
+import com.example.enjoytrip.exception.CustomException;
+import com.example.enjoytrip.exception.ErrorCode;
 import lombok.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,11 +42,14 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Integer boardUpdate(BoardDto boardDto) {
+        System.out.println(boardDto);
         return boardDao.boardUpdate(boardDto);
     }
 
     @Override
     public Integer boardDelete(Integer boardId) {
+        Integer result = boardDao.boardDelete(boardId);
+        if(result == null) throw new CustomException(ErrorCode.UnGrantAccount);
         return boardDao.boardDelete(boardId);
     }
 
@@ -54,13 +59,13 @@ public class BoardServiceImpl implements BoardService {
         for(Integer likeBoardId : likeRecommend){
             if(likeBoardId.equals(boardId)) return null;
         }
-        return boardDao.boardRecommendInsert(boardId, accountId);
+        return 1;
     }
     @Override
     public Integer boardRecommendDelete(Integer boardId, Integer accountId) {
         List<Integer> likeRecommend =  boardDao.boardRecommendList(accountId);
         for(Integer likeBoardId : likeRecommend){
-            if(likeBoardId.equals(boardId)) return boardDao.boardRecommendDelete(boardId, accountId);
+            if(likeBoardId.equals(boardId)) return 1;
         }
         return null;
     }

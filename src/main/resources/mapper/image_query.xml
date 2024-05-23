@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- sql -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.enjoytrip.image.dao.ImageDao">
+    <insert id= "imageSave" parameterType = "com.example.enjoytrip.image.dto.ImageDto">
+        insert into image (image_path, image_uuid) values (#{imagePath}, #{imageUuid})
+    </insert>
+    <select id= "imageList" parameterType="String" resultType="String">
+        select image_path from image where #{imageUuid} = image_uuid;
+    </select>
+</mapper>
