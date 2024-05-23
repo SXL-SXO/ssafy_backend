@@ -47,15 +47,15 @@ public class TouristspotController {
         return ResponseEntity.ok().body(byKeyword);
     }
 
-    @PostMapping("/recommends") //좋아요
-    public Integer touristspotRecommendInsert(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendInsert(recomend.get("touristspotId"), recomend.get("accountId"));
-    }
-
-    @PostMapping("/recommends/delete") //좋아요 취소
-    public Integer touristspotRecommendDelete(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendDelete(recomend.get("touristspotId"), recomend.get("accountId"));
-    }
+//    @PostMapping("/recommends") //좋아요
+//    public Integer touristspotRecommendInsert(@RequestBody Map<String, Integer> recommend){
+//        return TouristspotService.touristspotRecommendInsert(recommend.get("touristspotId"), recommend.get("accountId"));
+//    }
+//
+//    @PostMapping("/recommends/delete") //좋아요 취소
+//    public Integer touristspotRecommendDelete(@RequestBody Map<String, Integer> recommend){
+//        return TouristspotService.touristspotRecommendDelete(recommend.get("touristspotId"), recommend.get("accountId"));
+//    }
 
     @GetMapping("/recommends/account/{accountId}") //사용자가 누른 좋아요 게시판 목록
     public List<Integer> touristspotRecommendList(@PathVariable Integer accountId){

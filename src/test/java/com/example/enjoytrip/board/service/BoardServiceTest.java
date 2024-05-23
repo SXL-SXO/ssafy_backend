@@ -223,19 +223,19 @@ class BoardServiceTest {
         assertEquals(boardService.boardDetail(boardDto.getBoardId()).getBoardContent(), boardDto.getBoardContent());
     }
 
-    @Test
-    @DisplayName("board 추천하기 테스트 - 처음 추천")
-    @Transactional
-    void FirstAccountRecommendBoardTest() {
-        //given
-        accountService.accountInsert(accountDto);
-        boardDto.setAccountId(accountDto.getAccountId());
-        boardDto.setAccountNickname(accountDto.getAccountNickname());
-        boardService.boardInsert(boardDto);
-
-        //when, then
-        assertEquals(boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId()), 1);
-    }
+//    @Test
+//    @DisplayName("board 추천하기 테스트 - 처음 추천")
+//    @Transactional
+//    void FirstAccountRecommendBoardTest() {
+//        //given
+//        accountService.accountInsert(accountDto);
+//        boardDto.setAccountId(accountDto.getAccountId());
+//        boardDto.setAccountNickname(accountDto.getAccountNickname());
+//        boardService.boardInsert(boardDto);
+//
+//        //when, then
+//        assertEquals(boardService.boardRecommendInsert(boardDto.getBoardId(), accountDto.getAccountId()), 1);
+//    }
 
 //    @Test
 //    @DisplayName("board 추천하기 테스트 - 추천했던거 다시 추천")

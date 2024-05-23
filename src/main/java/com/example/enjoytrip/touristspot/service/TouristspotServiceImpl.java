@@ -49,35 +49,45 @@ public class TouristspotServiceImpl implements TouristspotService{
 
     @Override
     public Integer touristspotRecommendInsert(TouristspotRecomendDto touristspotrecomenddto) {
-        String mbti1 = touristspotrecomenddto.getMbti().substring(0, 1);
-        String mbti2 = touristspotrecomenddto.getMbti().substring(1, 2);
-        String mbti3 = touristspotrecomenddto.getMbti().substring(2, 3);
-        String mbti4 = touristspotrecomenddto.getMbti().substring(3);
-
-        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(touristspotrecomenddto.getAccountId());
-        for(Integer liketouristspotId : likeRecommend){
-            if(liketouristspotId.equals(touristspotrecomenddto.getTouristspotId())) return null;
-        }
-        int result = touristspotDao.touristspotRecommendInsert(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId());
-        if(result==1){
-            return touristspotDao.touristspotRecommendUpdate(touristspotrecomenddto.getTouristspotId(), mbti1, mbti2, mbti3, mbti4);
-        }
-        return null;
+        return 0;
     }
 
     @Override
     public Integer touristspotRecommendDelete(TouristspotRecomendDto touristspotrecomenddto) {
-        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(touristspotrecomenddto.getAccountId());
-        for(Integer likeBoardId : likeRecommend){
-            if(likeBoardId.equals(touristspotrecomenddto.getTouristspotId())) {
-                int result =  touristspotDao.touristspotRecommendDelete(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId());
-                if(result==1){
-                    touristspotDao.touristspotRecommendDelete(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId()); //이건 삭제 코드로 고쳐야함
-                }
-            }
-        }
-        return null;
+        return 0;
     }
+
+//    @Override
+//    public Integer touristspotRecommendInsert(TouristspotRecomendDto touristspotrecomenddto) {
+//        String mbti1 = touristspotrecomenddto.getMbti().substring(0, 1);
+//        String mbti2 = touristspotrecomenddto.getMbti().substring(1, 2);
+//        String mbti3 = touristspotrecomenddto.getMbti().substring(2, 3);
+//        String mbti4 = touristspotrecomenddto.getMbti().substring(3);
+//
+//        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(touristspotrecomenddto.getAccountId());
+//        for(Integer liketouristspotId : likeRecommend){
+//            if(liketouristspotId.equals(touristspotrecomenddto.getTouristspotId())) return null;
+//        }
+//        int result = touristspotDao.touristspotRecommendInsert(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId());
+//        if(result==1){
+//            return touristspotDao.touristspotRecommendUpdate(touristspotrecomenddto.getTouristspotId(), mbti1, mbti2, mbti3, mbti4);
+//        }
+//        return null;
+//    }
+
+//    @Override
+//    public Integer touristspotRecommendDelete(TouristspotRecomendDto touristspotrecomenddto) {
+//        List<Integer> likeRecommend =  touristspotDao.touristspotRecommendList(touristspotrecomenddto.getAccountId());
+//        for(Integer likeBoardId : likeRecommend){
+//            if(likeBoardId.equals(touristspotrecomenddto.getTouristspotId())) {
+//                int result =  touristspotDao.touristspotRecommendDelete(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId());
+//                if(result==1){
+//                    touristspotDao.touristspotRecommendDelete(touristspotrecomenddto.getTouristspotId(), touristspotrecomenddto.getAccountId()); //이건 삭제 코드로 고쳐야함
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public List<Integer> touristspotRecommendList(Integer accountId) {
@@ -87,5 +97,10 @@ public class TouristspotServiceImpl implements TouristspotService{
     @Override //추천 수 세기
     public Integer touristspotRecommendCount(Integer touristspotId) {
         return touristspotDao.touristspotRecommendCount(touristspotId);
+    }
+
+    @Override
+    public Integer touristspotRecommendUpdate(Integer touristspotId, String mbti) {
+        return 0;
     }
 }

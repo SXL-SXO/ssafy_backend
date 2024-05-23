@@ -54,25 +54,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Integer boardRecommendInsert(Integer boardId, Integer accountId) {
-        List<Integer> likeRecommend =  boardDao.boardRecommendList(accountId);
-        for(Integer likeBoardId : likeRecommend){
-            if(likeBoardId.equals(boardId)) return null;
-        }
-        return 1;
+    public Integer boardRecommendInsert(BoardDto boardDto) {
+        return boardDao.boardRecommendInsert(boardDto);
     }
     @Override
-    public Integer boardRecommendDelete(Integer boardId, Integer accountId) {
-        List<Integer> likeRecommend =  boardDao.boardRecommendList(accountId);
-        for(Integer likeBoardId : likeRecommend){
-            if(likeBoardId.equals(boardId)) return 1;
-        }
-        return null;
+    public Integer boardRecommendDelete(BoardDto boardDto) {
+        return boardDao.boardRecommendDelete(boardDto);
     }
 
     @Override
     public List<Integer> boardRecommendList(Integer accountId) {
-        List<Integer> result =  boardDao.boardRecommendList(accountId);
         return boardDao.boardRecommendList(accountId);
     }
 

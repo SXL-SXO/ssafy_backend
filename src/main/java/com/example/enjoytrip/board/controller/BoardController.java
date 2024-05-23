@@ -90,9 +90,12 @@ public class BoardController {
     }
 
     @PostMapping("/recommends")
-    public ResponseEntity<Integer> boardRecommendInsert(@RequestBody Map<String, Integer> recomend){
+    public ResponseEntity<Integer> boardRecommendInsert(@RequestBody Map<String, Integer> recommend){
         try {
-            Integer result = boardService.boardRecommendInsert(recomend.get("boardId"), recomend.get("accountId"));
+            BoardDto boardDto = new BoardDto();
+            boardDto.setBoardId(recommend.get("boardId"));
+            boardDto.setAccountId(recommend.get("accountId"));
+            Integer result = boardService.boardRecommendInsert(boardDto);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error occurred while inserting board recommendation", e);
@@ -101,9 +104,12 @@ public class BoardController {
     }
 
     @DeleteMapping("/recommends")
-    public ResponseEntity<Integer> boardRecommendDelete(@RequestBody Map<String, Integer> recomend){
+    public ResponseEntity<Integer> boardRecommendDelete(@RequestBody Map<String, Integer> recommend){
         try {
-            Integer result = boardService.boardRecommendDelete(recomend.get("boardId"), recomend.get("accountId"));
+            BoardDto boardDto = new BoardDto();
+            boardDto.setBoardId(recommend.get("boardId"));
+            boardDto.setAccountId(recommend.get("accountId"));
+            Integer result = boardService.boardRecommendDelete(boardDto);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error occurred while deleting board recommendation", e);
@@ -111,10 +117,11 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/recommends/account")
-    public ResponseEntity<List<Integer>> boardRecommendList(@RequestBody Integer accountId){
+    @GetMapping("/recommends/{boardId}")
+    public ResponseEntity<List<Integer>> boardRecommendList(@PathVariable Integer boardId){
         try {
-            List<Integer> result = boardService.boardRecommendList(accountId);
+            List<Integer> result = boardService.boardRecommendList(boardId);
+            System.out.println(result);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error("Error occurred while fetching board recommendation list by account ID", e);

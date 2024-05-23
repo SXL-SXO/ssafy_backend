@@ -42,7 +42,7 @@
     </delete>
 
     <select id = "boardRecommendList" parameterType="Integer">
-        select board_id from like_board where account_id = #{accountId} order by board_id desc
+        select account_id from like_board where board_id = #{boardId} order by board_id desc
     </select>
     <select id = "boardRecommendCount" parameterType="Integer">
         select count(account_id) from like_board where board_id = #{boardId}
@@ -51,7 +51,7 @@
         insert into like_board (board_id, account_id)
         values (#{boardId}, #{accountId})
     </insert>
-    <delete id = "boardRecommendDelete" parameterType="Integer">
+    <delete id = "boardRecommendDelete" parameterType="com.example.enjoytrip.board.dto.BoardDto">
         delete from like_board where board_id = #{boardId} and account_id = #{accountId}
     </delete>
 

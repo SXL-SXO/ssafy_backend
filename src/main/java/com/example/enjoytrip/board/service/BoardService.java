@@ -17,8 +17,8 @@ public interface BoardService {
     Integer boardUpdate(BoardDto boardDto);
     Integer boardDelete(Integer boardId);
 
-    Integer boardRecommendInsert(Integer boardId, Integer AccountId);
-    Integer boardRecommendDelete(Integer boardId, Integer AccountId);
+    Integer boardRecommendInsert(BoardDto boardDto);
+    Integer boardRecommendDelete(BoardDto boardDto);
     List<Integer> boardRecommendList(Integer AccountId);
     int boardRecommendCount(Integer BoardId);
 }
