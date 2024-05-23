@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
-
     private final AccountDao accountDao;
 
     @Override

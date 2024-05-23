@@ -39,7 +39,7 @@ public class BoardController {
             @RequestParam (required = false) AccountMbti searchMbti
     ){
 //        log.info("pageSize = {}", pageSize);
-        PageDto pageDto = new PageDto(pageSize, pageNum, searchWord);
+        PageDto pageDto = new PageDto(pageSize, pageNum, searchWord, searchMbti);
         List<BoardDto> list = boardService.boardList(pageDto);
         return list;
     }
@@ -62,9 +62,10 @@ public class BoardController {
         return dto;
     }
     @PutMapping("/{boardId}")
-    public Integer boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto dto){
-        dto.setBoardId(boardId);
-        return boardService.boardUpdate(dto);
+    public Integer boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto boardDto){
+        boardDto.setBoardId(boardId);
+        System.out.println(boardDto);
+        return boardService.boardUpdate(boardDto);
     }
     @PostMapping
     public Integer boardInsert(@RequestBody BoardDto boardDto){

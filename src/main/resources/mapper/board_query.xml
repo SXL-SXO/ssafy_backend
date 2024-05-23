@@ -6,15 +6,15 @@
 
 <mapper namespace="com.example.enjoytrip.board.dao.BoardDao">
     <!-- 여기서 특정양만큼의 게시글 보여주기, 닉네임 저장-->
-    <select id= "boardList" parameterType = "com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.board.dto.BoardDto">
-        select board_id, touristspot_id, board_title, board_content, account_nickname, board_category
-          from board
-        <if test='searchWord!=null'>where board_title like concat('%', #{searchWord}, '%')</if>
-
-      order by board_id
-         limit #{pageSize} offset #{pageNum}
+    <select id="boardList" parameterType="com.example.enjoytrip.common.dto.PageDto" resultType="com.example.enjoytrip.board.dto.BoardDto">
+        select board_id, (select t.touristspot_title from tourist_spot t where t.touristspot_id = b.touristspot_id) as touristspot_title,
+        b.touristspot_id, b.board_title, b.board_content, b.board_category, b.account_id, b.account_mbti, b.account_nickname,
+        (select count(account_id) from like_board l where b.board_id = l.board_id) board_recommend_count
+        from board b
+        <if test="searchWord!=null">where b.board_title like concat('%', #{searchWord}, '%')</if>
+        <if test="searchMbti!=null">and b.account_mbti = #{searchMbti}</if>
+        order by board_id limit #{pageSize} offset #{pageNum}
     </select>
-
     <select id= "boardDetail" parameterType = "int" resultType = "com.example.enjoytrip.board.dto.BoardDto">
         select *, (select touristspot_title from tourist_spot where touristspot_id = board.touristspot_id) touristspot_title
         from board

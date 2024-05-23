@@ -58,12 +58,6 @@
         order by touristspot_title
     </select>
 
-    <select id="relatedTitle" parameterType="String" resultType="com.example.enjoytrip.board.dto.BoardDto">
-        SELECT *
-        FROM tourist_spot
-        <if test="!null">where touristspot_title like concat('%', #{touristspotTitle}, '%')</if>
-    </select>
-
     <delete id = "touristspotDelete" parameterType="Integer">
         delete from board where board_id = #{touristSpotId}
     </delete>

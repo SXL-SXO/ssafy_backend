@@ -24,24 +24,28 @@ public class CommentController{
         return list;
     }
 
-    @GetMapping("/board/{commentId}")
+    @GetMapping("/boards/{commentId}")
     public ResponseEntity<CommentDto> commentDetail(@PathVariable("commentId") int commentId){
         CommentDto dto = commentService.commentDetail(commentId);
         return ResponseEntity.internalServerError().body(dto);
     }
 
-    @PostMapping("/")
-    public Integer commentInsert(CommentDto commentDto){
+    @PostMapping()
+    public Integer commentInsert(@RequestBody CommentDto commentDto){
+        System.out.println(commentDto);
         return commentService.commentInsert(commentDto);
     }
 
     @PutMapping("/{commentId}")
-    public Integer commentUpdate(@PathVariable("commentId") Integer boardId, CommentDto commentDto){
+    public Integer commentUpdate(@PathVariable("commentId") Integer commentId, @RequestBody CommentDto commentDto){
+        commentDto.setCommentId(commentId);
+        System.out.println(commentDto);
         return commentService.commentUpdate(commentDto);
     }
 
     @DeleteMapping("/{commentId}")
     public Integer commentDelete(@PathVariable("commentId") Integer commentId){
+        System.out.println("확인-delete-comment"+commentId);
         return commentService.commentDelete(commentId);
     }
 

@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
+    
+    UnGrantAccount(HttpStatus.UNAUTHORIZED, "권한이 없는 사용자입니다"),
+    LoginFail(HttpStatus.BAD_REQUEST, "아이디 또는 비밀번호를 확인하세여"),
     DuplicateUserEmail(HttpStatus.CONFLICT, "가입이력이 있는 이메일입니다."),
     UserNotFoundException(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
     InvalidSidoCode(HttpStatus.BAD_REQUEST, "유효하지 않은 시도코드입니다."),
