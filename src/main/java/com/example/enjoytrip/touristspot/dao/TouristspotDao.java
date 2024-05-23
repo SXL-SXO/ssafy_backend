@@ -15,7 +15,7 @@ public interface TouristspotDao {
 
     List<TouristSpot> findAll(PageDto pageDto);
     List<BoardDto> relatedBoard(Map<String, Object> map);
-    List<BoardDto> relatedTitle(String touristspotTitle);
+    List<TouristSpot> relatedTitle(String touristspotTitle);
 
     List<TouristSpot> findByKeyword(Map<String, Object> map);
 

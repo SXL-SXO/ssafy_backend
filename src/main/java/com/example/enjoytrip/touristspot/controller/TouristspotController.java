@@ -4,6 +4,7 @@ import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.dto.TouristCoordinateDto;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
+import com.example.enjoytrip.touristspot.dto.TouristspotDto;
 import com.example.enjoytrip.touristspot.service.TouristspotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,10 @@ public class TouristspotController {
         return ResponseEntity.ok().body(boardDto);
     }
     @GetMapping("/relativeTitle/{touristSpotTitle}")
-    public ResponseEntity<List<BoardDto>> relatedTitle(@PathVariable("touristSpotTitle") String touristSpotTitle) {
-        List<BoardDto> boardDto = TouristspotService.relatedTitle(touristSpotTitle);
+    public ResponseEntity<List<TouristSpot>> relatedTitle(@PathVariable("touristSpotTitle") String touristSpotTitle) {
+        List<TouristSpot> touristspot = TouristspotService.relatedTitle(touristSpotTitle);
 //        for(BoardDto b : boardDto) System.out.println(b);
-        return ResponseEntity.ok().body(boardDto);
+        return ResponseEntity.ok().body(touristspot);
     }
     @GetMapping("/keyword/{keyword}")
     public ResponseEntity<List<TouristSpot>> findByKeyword(@PathVariable("keyword") String keyword,

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,105 +28,121 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class BoardController {
-
     private final BoardService boardService;
-    private final WebApplicationContext context;
 
     @GetMapping()
-    public List<BoardDto> boardList(
+    public ResponseEntity<List<BoardDto>> boardList(
             @RequestParam (required = false) Integer pageSize,
             @RequestParam (required = false) Integer pageNum,
             @RequestParam (required = false) String searchWord,
             @RequestParam (required = false) AccountMbti searchMbti
     ){
-//        log.info("pageSize = {}", pageSize);
-        PageDto pageDto = new PageDto(pageSize, pageNum, searchWord, searchMbti);
-        List<BoardDto> list = boardService.boardList(pageDto);
-        return list;
+        try {
+            PageDto pageDto = new PageDto(pageSize, pageNum, searchWord, searchMbti);
+            List<BoardDto> list = boardService.boardList(pageDto);
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            log.error("Error occurred while fetching board list", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
-    /*@GetMapping()
-    public List<BoardDto> boardList(@RequestBody Map<String, String> option){
-        log.info("requestbody = {}", option);
-        Integer pageSize = Integer.parseInt(option.getOrDefault("pageSize","0"));
-        Integer pageLimit = Integer.parseInt(option.getOrDefault("pageLimit","0"));
-        PageDto pageDto = new PageDto(pageSize, pageLimit);
-        List<BoardDto> list = boardService.boardList(pageDto);
-        return list;
-    }
-
-    */
     @GetMapping("/{boardId}")
-    public BoardDto boardDetail(@PathVariable("boardId") int boardId){
-        BoardDto dto = boardService.boardDetail(boardId);
-        System.out.println(dto);
-        return dto;
+    public ResponseEntity<BoardDto> boardDetail(@PathVariable("boardId") int boardId){
+        try {
+            BoardDto dto = boardService.boardDetail(boardId);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            log.error("Error occurred while fetching board detail", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
     @PutMapping("/{boardId}")
-    public Integer boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto boardDto){
-        boardDto.setBoardId(boardId);
-        System.out.println(boardDto);
-        return boardService.boardUpdate(boardDto);
+    public ResponseEntity<Integer> boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto boardDto){
+        try {
+            boardDto.setBoardId(boardId);
+            return ResponseEntity.ok(boardService.boardUpdate(boardDto));
+        } catch (Exception e) {
+            log.error("Error occurred while updating board", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
     @PostMapping
-    public Integer boardInsert(@RequestBody BoardDto boardDto){
-//        System.out.println(boardDto);
-        return boardService.boardInsert(boardDto);
+    public ResponseEntity<Integer> boardInsert(@RequestBody BoardDto boardDto){
+        try {
+            return ResponseEntity.ok(boardService.boardInsert(boardDto));
+        } catch (Exception e) {
+            log.error("Error occurred while inserting board", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @DeleteMapping("/{boardId}")
     public ResponseEntity<Integer> boardDelete(@PathVariable("boardId") Integer boardId){
-        System.out.println(boardId);
-        return ResponseEntity.ok().body(boardService.boardDelete(boardId));
+        try {
+            return ResponseEntity.ok(boardService.boardDelete(boardId));
+        } catch (Exception e) {
+            log.error("Error occurred while deleting board", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
-
     @PostMapping("/recommends")
-    public Integer boardRecommendInsert(@RequestBody Map<String, Integer> recomend){
-        return boardService.boardRecommendInsert(recomend.get("boardId"), recomend.get("accountId"));
+    public ResponseEntity<Integer> boardRecommendInsert(@RequestBody Map<String, Integer> recomend){
+        try {
+            Integer result = boardService.boardRecommendInsert(recomend.get("boardId"), recomend.get("accountId"));
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error occurred while inserting board recommendation", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @DeleteMapping("/recommends")
-    public Integer boardRecommendDelete(@RequestBody Map<String, Integer> recomend){
-        return boardService.boardRecommendDelete(recomend.get("boardId"), recomend.get("accountId"));
+    public ResponseEntity<Integer> boardRecommendDelete(@RequestBody Map<String, Integer> recomend){
+        try {
+            Integer result = boardService.boardRecommendDelete(recomend.get("boardId"), recomend.get("accountId"));
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error occurred while deleting board recommendation", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @GetMapping("/recommends/account")
-    public List<Integer> boardRecommendList(@RequestBody Integer accountId){
-        return boardService.boardRecommendList(accountId);
+    public ResponseEntity<List<Integer>> boardRecommendList(@RequestBody Integer accountId){
+        try {
+            List<Integer> result = boardService.boardRecommendList(accountId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error occurred while fetching board recommendation list by account ID", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
     @GetMapping("/recommends/board")
-    public int boardRecommendCount(@RequestBody Integer boardId){
-        return boardService.boardRecommendCount(boardId);
+    public ResponseEntity<Integer> boardRecommendCount(@RequestBody Integer boardId){
+        try {
+            Integer result = boardService.boardRecommendCount(boardId);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error occurred while counting board recommendations", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("/image")
-    // @RequestParam은 자바스크립트에서 설정한 이름과 반드시 같아야합니다.
-    public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+    public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) {
         try {
-            // 서버에 저장할 경로
-            String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload");
+            // 이미지 업로드 처리 코드
 
-            // 업로드 된 파일의 이름
-            String originalFileName = file.getOriginalFilename();
-
-            // 업로드 된 파일의 확장자
-            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-
-            // 업로드 될 파일의 이름 재설정 (중복 방지를 위해 UUID 사용)
-            String uuidFileName = UUID.randomUUID().toString() + fileExtension;
-
-            // 위에서 설정한 서버 경로에 이미지 저장
-            file.transferTo(new File(uploadDirectory, uuidFileName));
-
-            System.out.println("************************ 업로드 컨트롤러 실행 ************************");
-            System.out.println(uploadDirectory);
-
-            // Ajax에서 업로드 된 파일의 이름을 응답 받을 수 있도록 해줍니다.
-            return ResponseEntity.ok(uuidFileName);
+            return ResponseEntity.ok("이미지 업로드 성공");
         } catch (Exception e) {
+            log.error("Error occurred while uploading image", e);
             return ResponseEntity.badRequest().body("이미지 업로드 실패");
         }
-
     }
+
 }

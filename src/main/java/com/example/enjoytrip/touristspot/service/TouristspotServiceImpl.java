@@ -34,9 +34,8 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override
-    public List<BoardDto> relatedTitle(String touristSpotTitle) {
+    public List<TouristSpot> relatedTitle(String touristSpotTitle) {
         return touristspotDao.relatedTitle(touristSpotTitle);
-
     }
 
     @Override
@@ -71,7 +70,7 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override //추천 수 세기
-    public int touristspotRecommendCount(Integer touristspotId) {
+    public Integer touristspotRecommendCount(Integer touristspotId) {
         return touristspotDao.touristspotRecommendCount(touristspotId);
     }
 
