@@ -71,7 +71,7 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override //추천 수 세기
-    public int touristspotRecommendCount(Integer touristspotId) {
+    public Integer touristspotRecommendCount(Integer touristspotId) {
         return touristspotDao.touristspotRecommendCount(touristspotId);
     }
 

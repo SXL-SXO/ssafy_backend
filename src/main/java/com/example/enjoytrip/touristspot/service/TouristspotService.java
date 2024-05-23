@@ -10,6 +10,7 @@ import java.util.List;
 public interface TouristspotService {
     List<TouristSpot> findAll(PageDto pageDto);
     List<BoardDto> relatedBoard(int touristSpotId, PageDto pageDto);
+    List<BoardDto> relatedTitle(String touristSpotTitle);
     List<TouristSpot> findByKeyword(String keyword, PageDto pageDto);
     Integer touristspotRecommendInsert(Integer touristspotId, Integer AccountId);
     Integer touristspotRecommendDelete(Integer touristspotId, Integer AccountId);
