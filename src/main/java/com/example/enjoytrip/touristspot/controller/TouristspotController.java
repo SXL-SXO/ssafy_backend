@@ -32,7 +32,12 @@ public class TouristspotController {
 
         return ResponseEntity.ok().body(boardDto);
     }
-
+    @GetMapping("/relativeTitle/{touristSpotTitle}")
+    public ResponseEntity<List<BoardDto>> relatedTitle(@PathVariable("touristSpotTitle") String touristSpotTitle) {
+        List<BoardDto> boardDto = TouristspotService.relatedTitle(touristSpotTitle);
+//        for(BoardDto b : boardDto) System.out.println(b);
+        return ResponseEntity.ok().body(boardDto);
+    }
     @GetMapping("/keyword/{keyword}")
     public ResponseEntity<List<TouristSpot>> findByKeyword(@PathVariable("keyword") String keyword,
                                                            PageDto pageDto){

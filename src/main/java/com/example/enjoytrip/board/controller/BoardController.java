@@ -1,11 +1,16 @@
 package com.example.enjoytrip.board.controller;
 
+import static ch.qos.logback.core.joran.JoranConstants.NULL;
+
+import com.example.enjoytrip.account.dto.AccountMbti;
 import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.board.service.BoardService;
 import com.example.enjoytrip.common.dto.PageDto;
+import java.io.InputStream;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,9 +35,11 @@ public class BoardController {
     public List<BoardDto> boardList(
             @RequestParam (required = false) Integer pageSize,
             @RequestParam (required = false) Integer pageNum,
-            @RequestParam (required = false) String searchWord){
+            @RequestParam (required = false) String searchWord,
+            @RequestParam (required = false) AccountMbti searchMbti
+    ){
 //        log.info("pageSize = {}", pageSize);
-        PageDto pageDto = new PageDto(pageSize, pageNum, searchWord);
+        PageDto pageDto = new PageDto(pageSize, pageNum, searchWord, searchMbti);
         List<BoardDto> list = boardService.boardList(pageDto);
         return list;
     }
@@ -51,20 +58,25 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public BoardDto boardDetail(@PathVariable("boardId") int boardId){
         BoardDto dto = boardService.boardDetail(boardId);
+        System.out.println(dto);
         return dto;
     }
     @PutMapping("/{boardId}")
-    public Integer boardUpdate(@PathVariable("boardId") int boardId, BoardDto dto){
-        return boardService.boardUpdate(dto);
+    public Integer boardUpdate(@PathVariable("boardId") Integer boardId, @RequestBody BoardDto boardDto){
+        boardDto.setBoardId(boardId);
+        System.out.println(boardDto);
+        return boardService.boardUpdate(boardDto);
     }
     @PostMapping
-    public Integer boardInsert(BoardDto dto){
-        return boardService.boardInsert(dto);
+    public Integer boardInsert(@RequestBody BoardDto boardDto){
+//        System.out.println(boardDto);
+        return boardService.boardInsert(boardDto);
     }
 
     @DeleteMapping("/{boardId}")
-    public Integer boardDelete(@PathVariable("boardId") int boardId){
-        return boardService.boardDelete(boardId);
+    public ResponseEntity<Integer> boardDelete(@PathVariable("boardId") Integer boardId){
+        System.out.println(boardId);
+        return ResponseEntity.ok().body(boardService.boardDelete(boardId));
     }
 
 

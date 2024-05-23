@@ -34,6 +34,12 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override
+    public List<BoardDto> relatedTitle(String touristSpotTitle) {
+        return touristspotDao.relatedTitle(touristSpotTitle);
+
+    }
+
+    @Override
     public List<TouristSpot> findByKeyword(String keyword, PageDto pageDto) {
         Map<String, Object> map = new HashMap<>();
         map.put("keyword", keyword);
@@ -65,7 +71,7 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override //추천 수 세기
-    public Integer touristspotRecommendCount(Integer touristspotId) {
+    public int touristspotRecommendCount(Integer touristspotId) {
         return touristspotDao.touristspotRecommendCount(touristspotId);
     }
 

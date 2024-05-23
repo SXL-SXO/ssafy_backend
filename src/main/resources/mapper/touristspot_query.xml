@@ -11,6 +11,7 @@
         limit #{pageSize} offset #{pageNum}
     </select>
 
+
     <select id="findByKeyword" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
         from tourist_spot
@@ -44,6 +45,12 @@
     <delete id = "touristspotRecommendDelete" parameterType="Integer">
         delete from like_spot where touristpot_id = #{touristspotId} and account_id = #{accountId}
     </delete>
+
+    <select id="relatedTitle" parameterType="String" resultType="com.example.enjoytrip.board.dto.BoardDto">
+        SELECT *
+        FROM tourist_spot
+        <if test="!null">where touristspot_title like concat('%', #{touristspotTitle}, '%')</if>
+    </select>
 
 
 
