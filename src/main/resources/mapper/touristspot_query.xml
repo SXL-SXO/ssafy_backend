@@ -53,5 +53,23 @@
     </select>
 
 
+    <update id="touristspotRecommendUpdate" parameterType="com.example.enjoytrip.touristspot.dto.TouristspotRecomendDto">
+        UPDATE review
+        SET
+            like_i = like_i + IF(#{mbti1} = 'I', 1, 0),
+            like_e = like_e + IF(#{mbti1} = 'E', 1, 0),
+            like_s = like_s + IF(#{mbti2} = 'S', 1, 0),
+            like_n = like_n + IF(#{mbti2} = 'N', 1, 0),
+            like_f = like_f + IF(#{mbti3} = 'F', 1, 0),
+            like_t = like_t + IF(#{mbti3} = 'T', 1, 0),
+            like_p = like_p + IF(#{mbti4} = 'P', 1, 0),
+            like_j = like_j + IF(#{mbti4} = 'J', 1, 0)
+        WHERE
+            touristspot_id = #{touristspotId}
+    </update>
+
+
+
+
 
 </mapper>

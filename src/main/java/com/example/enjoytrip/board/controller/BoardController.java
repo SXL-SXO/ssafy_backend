@@ -79,7 +79,6 @@ public class BoardController {
         return ResponseEntity.ok().body(boardService.boardDelete(boardId));
     }
 
-
     @PostMapping("/recommends")
     public Integer boardRecommendInsert(@RequestBody Map<String, Integer> recomend){
         return boardService.boardRecommendInsert(recomend.get("boardId"), recomend.get("accountId"));

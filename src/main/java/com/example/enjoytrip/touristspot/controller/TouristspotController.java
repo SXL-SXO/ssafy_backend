@@ -4,6 +4,7 @@ import com.example.enjoytrip.board.dto.BoardDto;
 import com.example.enjoytrip.common.dto.PageDto;
 import com.example.enjoytrip.touristspot.dto.TouristCoordinateDto;
 import com.example.enjoytrip.touristspot.domain.TouristSpot;
+import com.example.enjoytrip.touristspot.dto.TouristspotRecomendDto;
 import com.example.enjoytrip.touristspot.service.TouristspotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +49,14 @@ public class TouristspotController {
     }
 
     @PostMapping("/recommends") //좋아요
-    public Integer touristspotRecommendInsert(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendInsert(recomend.get("touristspotId"), recomend.get("accountId"));
+    public Integer touristspotRecommendInsert(@RequestBody TouristspotRecomendDto touristspotrecomenddto)
+    {
+        return TouristspotService.touristspotRecommendInsert(touristspotrecomenddto);
     }
 
     @PostMapping("/recommends/delete") //좋아요 취소
-    public Integer touristspotRecommendDelete(@RequestBody Map<String, Integer> recomend){
-        return TouristspotService.touristspotRecommendDelete(recomend.get("touristspotId"), recomend.get("accountId"));
+    public Integer touristspotRecommendDelete(@RequestBody TouristspotRecomendDto touristspotrecomenddto){
+        return TouristspotService.touristspotRecommendDelete(touristspotrecomenddto);
     }
 
     @GetMapping("/recommends/account/{accountId}") //사용자가 누른 좋아요 게시판 목록
@@ -66,8 +68,4 @@ public class TouristspotController {
         return TouristspotService.touristspotRecommendCount(touristspotId);
     }
 
-    @PutMapping("/recommends/board/{touristspotId}") //좋아요 mbti update
-    public int touristspotRecommendUpdate(@RequestBody Integer touristsopId, @RequestBody String mbti){
-        return TouristspotService.touristspotRecommendUpdate(touristsopId, mbti);
-    }
 }
