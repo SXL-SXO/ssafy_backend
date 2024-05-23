@@ -2,11 +2,6 @@ package com.example.enjoytrip.image.controller;
 
 import com.example.enjoytrip.exception.CustomException;
 import com.example.enjoytrip.exception.ErrorCode;
-import com.example.enjoytrip.image.dto.ImageDto;
-import com.example.enjoytrip.image.dto.ImageReq;
-import com.example.enjoytrip.image.service.ImageService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +39,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/upload")
 @Slf4j
 public class ImageController {
-    private final ImageService imageService;
-
     @Value("${file.dir}")
     private String fileDir;
 
@@ -59,9 +52,11 @@ public class ImageController {
             MalformedURLException {
         System.out.println("filename = " + filename);
         String fullPath = getFullPath(filename);
-        String path = fullPath.substring(2);
+//        String path = fullPath.substring(2);
+//        System.out.println(path);
+//        System.out.println(fullPath);
 
-        return new UrlResource("file:" + path);
+        return new UrlResource("file:" + fullPath);
     }
 
     @PostMapping

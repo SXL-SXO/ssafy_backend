@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Integer boardUpdate(BoardDto boardDto) {
+        System.out.println(boardDto);
         return boardDao.boardUpdate(boardDto);
     }
 

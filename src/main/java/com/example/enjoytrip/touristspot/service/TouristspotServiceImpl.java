@@ -35,8 +35,8 @@ public class TouristspotServiceImpl implements TouristspotService{
 
     @Override
     public List<BoardDto> relatedTitle(String touristSpotTitle) {
-        System.out.println(touristSpotTitle + "TouristServiceImpl");
         return touristspotDao.relatedTitle(touristSpotTitle);
+
     }
 
     @Override
