@@ -61,4 +61,8 @@ public class TouristspotController {
         return TouristspotService.touristspotRecommendCount(touristspotId);
     }
 
+    @PutMapping("/recommends/board/{touristspotId}") //좋아요 mbti update
+    public int touristspotRecommendUpdate(@RequestBody Integer touristsopId, @RequestBody String mbti){
+        return TouristspotService.touristspotRecommendUpdate(touristsopId, mbti);
+    }
 }

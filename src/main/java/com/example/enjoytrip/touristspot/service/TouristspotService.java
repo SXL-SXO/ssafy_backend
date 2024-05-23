@@ -10,13 +10,11 @@ import java.util.List;
 public interface TouristspotService {
     List<TouristSpot> findAll(PageDto pageDto);
     List<BoardDto> relatedBoard(int touristSpotId, PageDto pageDto);
-    List<TouristSpot> findBySido(int sidoCode, PageDto pageDto);
-    List<TouristSpot> findByGugun(int gugunCode, PageDto pageDto);
     List<TouristSpot> findByKeyword(String keyword, PageDto pageDto);
-    TouristSpot findById(int touristspotId);
-    List<TouristSpot> findByCoordinates(TouristCoordinateDto touristCoordinateDto, PageDto pageDto);
     Integer touristspotRecommendInsert(Integer touristspotId, Integer AccountId);
     Integer touristspotRecommendDelete(Integer touristspotId, Integer AccountId);
     List<Integer> touristspotRecommendList(Integer AccountId);
-    int touristspotRecommendCount(Integer touristspotId);
+    Integer touristspotRecommendCount(Integer touristspotId);
+
+    Integer touristspotRecommendUpdate(Integer touristspotId, String mbti);
 }

@@ -24,6 +24,7 @@ public interface TouristspotDao {
     Integer touristspotRecommendInsert(Integer touristspotId, Integer accountId);
     Integer touristspotRecommendDelete(Integer touristspotId, Integer accountId);
     List<Integer> touristspotRecommendList(Integer accountId);
-    int touristspotRecommendCount(Integer boardId);
+    Integer touristspotRecommendCount(Integer boardId);
+    Integer touristspotRecommendUpdate(Integer touristspotId, String mbti1, String mbti2, String mbti3, String mbti4);
 
 }

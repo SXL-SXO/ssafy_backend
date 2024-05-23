@@ -11,39 +11,11 @@
         limit #{pageSize} offset #{pageNum}
     </select>
 
-    <select id="findBySido" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
-        select *
-        from tourist_spot
-        where touristspot_sido_code = #{sidoCode}
-        limit #{pageDto.pageSize} offset #{pageDto.pageNum}
-    </select>
-
-    <select id="findByGugun" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
-        select *
-        from tourist_spot
-        where touristspot_gugun_code = #{gugunCode}
-        limit #{pageDto.pageSize} offset #{pageDto.pageNum}
-    </select>
-
     <select id="findByKeyword" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
         select *
         from tourist_spot
         where touristspot_title like concat('%', #{keyword}, '%')
         limit #{pageDto.pageSize} offset #{pageDto.pageNum}
-    </select>
-
-    <select id="findById" parameterType="int" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
-        select *
-        from tourist_spot
-        where touristspot_id = #{touristspotId}
-    </select>
-
-    <select id="findByCoordinates" parameterType="map" resultType="com.example.enjoytrip.touristspot.domain.TouristSpot">
-        SELECT *
-        FROM touristspot
-        WHERE touristspot_latitude &lt;= #{touristCoordinateDto.northLatitude} AND touristspot_latitude &gt;= #{touristCoordinateDto.southLatitude}
-          AND touristspot_longitude &lt;= #{touristCoordinateDto.eastLongitude} AND touristspot_longitude &gt;= #{touristCoordinateDto.westLongitude}
-            LIMIT #{pageDto.pageSize} OFFSET #{pageDto.pageNum}
     </select>
 
     <select id="relatedBoard" parameterType="map" resultType="com.example.enjoytrip.board.dto.BoardDto">

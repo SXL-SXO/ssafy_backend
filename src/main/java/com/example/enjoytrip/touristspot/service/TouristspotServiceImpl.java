@@ -34,40 +34,11 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override
-    public List<TouristSpot> findBySido(int sidoCode, PageDto pageDto) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("sidoCode", sidoCode);
-        map.put("pageDto", pageDto);
-        return touristspotDao.findBySido(map);
-    }
-
-    @Override
-    public List<TouristSpot> findByGugun(int gugunCode, PageDto pageDto) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("gugunCode", gugunCode);
-        map.put("pageDto", pageDto);
-        return touristspotDao.findByGugun(map);
-    }
-
-    @Override
     public List<TouristSpot> findByKeyword(String keyword, PageDto pageDto) {
         Map<String, Object> map = new HashMap<>();
         map.put("keyword", keyword);
         map.put("pageDto", pageDto);
         return touristspotDao.findByKeyword(map);
-    }
-
-    @Override
-    public TouristSpot findById(int touristspotId) {
-        return touristspotDao.findById(touristspotId);
-    }
-
-    @Override
-    public List<TouristSpot> findByCoordinates(TouristCoordinateDto touristCoordinateDto, PageDto pageDto) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("pageDto", pageDto);
-        map.put("touristCoordinateDto", touristCoordinateDto);
-        return touristspotDao.findByCoordinates(map);
     }
 
     @Override
@@ -94,7 +65,18 @@ public class TouristspotServiceImpl implements TouristspotService{
     }
 
     @Override //추천 수 세기
-    public int touristspotRecommendCount(Integer touristspotId) {
+    public Integer touristspotRecommendCount(Integer touristspotId) {
         return touristspotDao.touristspotRecommendCount(touristspotId);
+    }
+
+    @Override
+    public Integer touristspotRecommendUpdate(Integer touristspotId, String mbti) {
+        String mbti1 = mbti.substring(0, 1);
+        String mbti2 = mbti.substring(1, 2);
+        String mbti3 = mbti.substring(2, 3);
+        String mbti4 = mbti.substring(3);
+
+        // DAO에 각 부분을 전달하여 처리
+        return touristspotDao.touristspotRecommendUpdate(touristspotId, mbti1, mbti2, mbti3, mbti4);
     }
 }
