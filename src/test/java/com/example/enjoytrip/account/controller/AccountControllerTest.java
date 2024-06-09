@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
+//mock어쩌고 있으면 없어도 됨
 @AutoConfigureMockMvc
 @WebMvcTest(controllers = AccountController.class)
 public class AccountControllerTest {
